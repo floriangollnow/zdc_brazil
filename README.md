@@ -8,7 +8,7 @@ Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson an
 all data used are openly accessible. Replication data is available upon request.
 
 ## Dependencies
-Code was written R 4.1.0, land use and deforestation data was extracted via Google Earth Engine. R Packages required include tidyverse, sf, raster, and did.
+Code was written in R 4.1.0, land use and deforestation data was extracted via Google Earth Engine (GEE). R Packages required include tidyverse, sf, raster, and did.
 
 ##Summary of scripts
 0. data preparation (base for all)
@@ -24,7 +24,7 @@ Code was written R 4.1.0, land use and deforestation data was extracted via Goog
 4. Data scripts
   4.1 Soy Deforestation (Mapbiomas)
   4.2 Study area map
-  4.3
+  4.3 Biomes 
 
 
 

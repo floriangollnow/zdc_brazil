@@ -14,7 +14,7 @@ dir.MapBiomas_v5 <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBioma
 #IBGE
 dir.SoyIBGE <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/IBGE_SoyAreaYieldMunicipio/area"
 
-#Read data
+# Read data ----
 ## trase datase 
 trase_25_f <- read_rds(file.path (out, "trase_25_cnpj_v01.rds"))
 ## municipalities, with biomes and states
@@ -27,20 +27,20 @@ soy.area <- read_rds(file.path(dir.SoyIBGE, "PlantedSoyAreaSidraR.rds" )) %>% mu
 trase_25_u <- trase_25_f %>% filter(!str_detect (MUNICIPALITY, "UNKNOWN"))
 
 
-# Prepare data for all municipalities and years
+# Prepare data for all municipalities and years ----
 ## TRASE only report on  municipalities that export soy at some point in time. Here I need all municipalities and all potential years 
 full_lArea <- expand_grid (GEOCODE = unique (ibgeMun %>% as_tibble () %>% pull(CD_GEOCMU)), YEAR = 2000:2019) # build tibble with all GEOCODES and YEARS
 full <- full_lArea  %>%  left_join(ibgeMun %>% as_tibble () %>% dplyr::select(CD_GEOCMU,Biome_c,StateIBGE, Biome_lArea ), by =c("GEOCODE"="CD_GEOCMU")) ## add BIOME (Biome_c: indicating Biomes Names and Biome combinations,Biome_lArea indicating Biomes Name of largest Biome intersection), STATE 
 
 ####################
-# Municipality area
+# Municipality area ----
 ###################
 #add Mun area in Ha
 ibgeMun <- ibgeMun %>% mutate (Area_Ha = as.double(Area_ha)) %>% rename(area_ha = Area_Ha)
 ibgeMun_area <- as_tibble(ibgeMun) %>% dplyr::select ("CD_GEOCMU", "area_ha")
 
 ####################
-# Calculate SoyM market share as
+# Calculate SoyM market shares ----
 ###################
 # first all Exports and second SoyM exports
 ## summing all municipal production per year and Geocode
@@ -138,6 +138,7 @@ MunSOYMSoy_full_d <- MunSOYMSoy_full_c %>% mutate (soyM_share= if_else(is.na(soy
 # SOYMSHARE: 50% thresholds
 MunSOYMSoy_full_e <- MunSOYMSoy_full_d %>% mutate(soyMtrader_share_50 = if_else(soyMtrader_share>=50, 1, 0))
 
+# write data ----
 #######################################################################################################################
 write_rds(MunSOYMSoy_full_e, file.path (out, "MarketShare_annual_v1.rds"))
 write_csv(MunSOYMSoy_full_e, file.path (out, "MarketShare_annual_v1.csv"))

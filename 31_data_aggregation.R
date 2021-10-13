@@ -136,7 +136,9 @@ MunSOYMSoy_full_d <- MunSOYMSoy_full_c %>% mutate (soyM_share= if_else(is.na(soy
 
 
 # SOYMSHARE: 50% thresholds
-MunSOYMSoy_full_e <- MunSOYMSoy_full_d %>% mutate(soyMtrader_share_50 = if_else(soyMtrader_share>=50, 1, 0))
+MunSOYMSoy_full_e <- MunSOYMSoy_full_d %>% mutate(soyMtrader_share_50 = if_else(soyMtrader_share>=50, 1, 0),
+                                                  soyMtrader_share_25 = if_else(soyMtrader_share>=25, 1, 0),
+                                                  soyMtrader_share_75 = if_else(soyMtrader_share>=75, 1, 0))
 
 # write data ----
 #######################################################################################################################

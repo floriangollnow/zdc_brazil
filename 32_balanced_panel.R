@@ -31,7 +31,7 @@ Soy0_id06 <- Soy0_id_temp06 %>% dplyr::filter(n_geocode==13& keep==TRUE) %>% pul
 
 ##  
 Soy0_id_b_tb05 <- as_tibble(Soy0_id05) %>% mutate (balanced05=TRUE) %>% rename(GEOCODE=value)
-Soy0_id_b_tb06 <- as_tibble(Soy0_id06) %>% mutate (balanced07=TRUE) %>% rename(GEOCODE=value)
+Soy0_id_b_tb06 <- as_tibble(Soy0_id06) %>% mutate (balanced06=TRUE) %>% rename(GEOCODE=value)
 
 ## join with main dataset
 MarketShareData_S05b<- MarketShareData_S05 %>% 

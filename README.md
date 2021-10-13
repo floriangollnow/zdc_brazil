@@ -20,7 +20,10 @@ Code was written in R 4.1.0, land use and deforestation data was extracted via G
   2.1
 3. DiD analysis (builds upon 0. data preparation)
   3.1 data aggregation
-  3.2 
+  3.2 balance panel for all municipalities inside the Amzon that had soybean planted throughout 2005-2018
+  3.3 code SoyM treatment variable
+  3.4 DiD analysis and avoided deforestation 
+  3.5 maps treatment year and municipality
 4. Data scripts
   4.1 Soy Deforestation (Mapbiomas)
   4.2 Study area map

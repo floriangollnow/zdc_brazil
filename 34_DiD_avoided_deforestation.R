@@ -18,7 +18,7 @@ n_distinct(MS_data$GEOCODE)
 n_distinct(MS_data$YEAR)
 n_distinct(MS_data$GEOCODE)*n_distinct(MS_data$YEAR)
 
-# change dataype for did package
+# change datatype for did package
 MS_data <- MS_data%>% mutate (area_ha_int = as.integer(area_ha),geocode_n= as.numeric(GEOCODE))
 MS_data.df <- as.data.frame(MS_data)
 
@@ -82,7 +82,7 @@ for (i in c(1,2)){
   print( round ((exp(group_effects$overall.se)-1)*100,2))
   # plot average effect over time
   te <- ggdid(es, ylim = c(-4,4))+
-    xlab("Year")+ylab("Coefficient")+
+    xlab("Year")+ylab("ATT")+ ggtitle(NULL)+
     scale_color_discrete(labels=c("pre-SoyM", "post-SoyM"))+
     theme_bw()+
     theme(legend.title = element_blank(), legend.position = c(0.20,0.85))
@@ -133,7 +133,7 @@ print ("transformed SE")
 print( round ((exp(group_effects_3$overall.se)-1)*100,2))
 
 te_3 <- ggdid(es, ylim = c(-4,4))+
-  xlab("Year")+ylab("Coefficient")+
+  xlab("Year")+ylab("ATT")+ ggtitle(NULL)+
   scale_color_discrete(labels=c("pre-SoyM", "post-SoyM"))+
   theme_bw()+
   theme(legend.title = element_blank(), legend.position = c(0.20,0.85))
@@ -183,7 +183,7 @@ print ("transformed SE")
 print( round ((exp(group_effects_sub$overall.se)-1)*100,2))
 
 ny_06<- ggdid(es, ylim = c(-4,4))+
-  xlab("Year")+ylab("Coefficient")+
+  xlab("Year")+ylab("ATT")+ ggtitle(NULL)+
   scale_color_discrete(labels=c("pre-SoyM", "post-SoyM"))+
   theme_bw()+
   theme(legend.title = element_blank(), legend.position = c(0.20,0.85))

@@ -1,7 +1,7 @@
 Replication code for "Adoption and market coverage influence the effectiveness of supply chain policies" doi:XXX
 
 ## Status: 
-replication and cleaning in progress
+replication and cleaning in progress (replication complet for 1 and 4)
 
 ## Authors
 Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson and Rachael Garrett. Code was written by Florian Gollnow

@@ -2,6 +2,7 @@
 # based on 01_data_preparation and 4.2 biome
 
 library(tidyverse)
+library(scales)
 library(sf)
 
 # Directories
@@ -13,6 +14,8 @@ admin.dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/Admin/IBGE/2015/br_
 dir.MapBiomas_v5 <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v5"
 #IBGE
 dir.SoyIBGE <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/IBGE_SoyAreaYieldMunicipio/area"
+#GAEZ
+dir.SoySuit <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/SoySuit"
 
 # Read data ----
 ## trase datase 
@@ -122,27 +125,62 @@ Soy.l <- Soy.l %>% mutate(YEAR= as.numeric (str_sub(YEAR,start = -4)),
 MunSOYMSoy_full_c <- MunSOYMSoy_full_b %>% left_join(Soy.l, by= c("GEOCODE" = "CD_GEOCMU", "YEAR"))
 
 
+###################
+# add forest data Mapbiomas ---------
+##################
+forestMT <- read_rds(file.path(dir.MapBiomas_v5, "forest_base2000_transitions_region.rds" ))
+forestMT.l <- forestMT %>%  pivot_longer( -CD_GEOCMU, names_to="YEAR", values_to= "area_m")
+forestMT.l <- forestMT.l %>%  mutate(YEAR= as.numeric (str_sub(YEAR,start = -4)),
+                                     forestMT_ha = area_m/10000) %>%  dplyr::select (-area_m)
+rm(forestMT)
+
+MunSOYMSoy_full_d <- MunSOYMSoy_full_c %>% left_join(forestMT.l, by= c("GEOCODE" = "CD_GEOCMU", "YEAR"))
+MunSOYMSoy_full_d <- MunSOYMSoy_full_d %>% mutate (forestMT_perc = (forestMT_ha/area_ha)*100)
+MunSOYMSoy_full_d <- MunSOYMSoy_full_d %>% arrange(GEOCODE, YEAR) %>%  mutate(forestMT_ha_lag = lag(forestMT_ha),
+                                                                              forestMT_ha_lag = case_when(YEAR== 2000 ~ NA_real_,
+                                                                                                          TRUE~ forestMT_ha_lag),
+                                                                              defMT = forestMT_ha_lag - forestMT_ha)
+
+
+
+
+####################
+# Add GAEZ soy suit forest area -----
+###################
+suitforestMT <- read_rds(file.path(dir.SoySuit, "SoySuit_forest_area_muni.rds" ))
+suitforestMT.l <- suitforestMT %>% pivot_longer( -c(CD_GEOCMU), names_to="temp", values_to= "area_m")
+suitforestMT.l <- suitforestMT.l %>% mutate(YEAR= as.numeric(str_sub(temp, start=-4)),
+                                            Suit= str_sub(temp, end=-6)) %>% select(-temp)
+
+suitforestMT.l.w <- suitforestMT.l %>% pivot_wider(names_from = Suit , values_from = area_m)
+suitforestMT.l.w <- suitforestMT.l.w %>% mutate(GAEZ_apt_forest_area_ha= GAEZ_apt_forest_area_m/10000) %>% 
+  select (-c(GAEZ_apt_forest_area_m,GAEZ_slope_forest_area_m,slope_soil_forest_area_m, apt_forest_area_m))
+
+MunSOYMSoy_full_e <- MunSOYMSoy_full_d %>% left_join(suitforestMT.l.w, by= c("GEOCODE" = "CD_GEOCMU", "YEAR"))
+MunSOYMSoy_full_e <- MunSOYMSoy_full_e %>% mutate (GAEZ_apt_forest_area_perc = (GAEZ_apt_forest_area_ha/area_ha)*100)
+
+
 ###############
 # Edit SoyM/ZDC market share ------
 ###############
 ## replace_na of soyM share if soy production occurred in municipality based on IBGE or Mapbiomas
-FirstYEAR <-  MunSOYMSoy_full_c %>% filter (soyIBGE_ha > 0 | soy_ha>0) %>% group_by(GEOCODE)  %>% summarize (FirstYEAR = min(YEAR)) # only keep those that have soy planted
-MunSOYMSoy_full_c <- MunSOYMSoy_full_c %>% left_join(FirstYEAR, by="GEOCODE")
+FirstYEAR <-  MunSOYMSoy_full_e %>% filter (soyIBGE_ha > 0 | soy_ha>0) %>% group_by(GEOCODE)  %>% summarize (FirstYEAR = min(YEAR)) # only keep those that have soy planted
+MunSOYMSoy_full_e <- MunSOYMSoy_full_e %>% left_join(FirstYEAR, by="GEOCODE")
 
-MunSOYMSoy_full_d <- MunSOYMSoy_full_c %>% mutate (soyM_share= if_else(is.na(soyM_share) & YEAR>=(FirstYEAR), 0, soyM_share),
+MunSOYMSoy_full_f <- MunSOYMSoy_full_e %>% mutate (soyM_share= if_else(is.na(soyM_share) & YEAR>=(FirstYEAR), 0, soyM_share),
                                                    soyMtrader_share= if_else(is.na(soyMtrader_share) & YEAR>=(FirstYEAR), 0, soyMtrader_share),
                                                    GZDC_share = if_else(is.na(GZDC_share) & YEAR>=(FirstYEAR), 0, GZDC_share),
                                                    GZDCtrader_share = if_else(is.na(GZDCtrader_share) & YEAR>=(FirstYEAR), 0, GZDCtrader_share))
 
 
 # SOYMSHARE: 50% thresholds
-MunSOYMSoy_full_e <- MunSOYMSoy_full_d %>% mutate(soyMtrader_share_50 = if_else(soyMtrader_share>=50, 1, 0),
+MunSOYMSoy_full_g <- MunSOYMSoy_full_f %>% mutate(soyMtrader_share_50 = if_else(soyMtrader_share>=50, 1, 0),
                                                   soyMtrader_share_25 = if_else(soyMtrader_share>=25, 1, 0),
                                                   soyMtrader_share_75 = if_else(soyMtrader_share>=75, 1, 0))
 
 # write data ----
 #######################################################################################################################
-write_rds(MunSOYMSoy_full_e, file.path (out, "MarketShare_annual_v1.rds"))
-write_csv(MunSOYMSoy_full_e, file.path (out, "MarketShare_annual_v1.csv"))
+write_rds(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.rds"))
+write_csv(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.csv"))
 
 

@@ -1,7 +1,7 @@
 Replication code for "Adoption and market coverage influence the effectiveness of supply chain policies" doi:XXX
 
 ## Status: 
-replication and cleaning in progress (replication complet for 1 and 4)
+replication and cleaning in progress (replication complet for 1, 2 and 4)
 
 ## Authors
 Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson and Rachael Garrett. Code was written by Florian Gollnow
@@ -15,6 +15,8 @@ Code was written in R 4.1.0, land use and deforestation data was extracted via G
 ## Summary of scripts  
 0. data preparation (base for all)  
   0.1 reads trase data, consolidates company names, adds ZDCs, adds CNPJ  
+  0.2 data combination and aggregation municipality   
+  
   0.2 Soy Deforestation (derived from Mapbiomas)    
   0.3 Biomes-municiplaity intersection    
   0.4 Study area map  
@@ -25,16 +27,15 @@ Code was written in R 4.1.0, land use and deforestation data was extracted via G
   1.4 Deforestation hotspots  
   1.5 add cnpj data  
   1.6 create figures for manuscript  
-2. suitable forest area  
-
+2. ZDC spatial coverage (builds on 0.2)
+  2.1 forest suit adoption bias deforestation
 3. biodiversity analysis (builds upon 0. data preparation)  
   3.1 Species Richness  
-4. DiD analysis (builds upon 0. data preparation)  
-  4.1 data aggregation   
-  4.2 balanced panel for all municipalities inside the Amazon that had soybean planted throughout 2005-2018  
-  4.3 code SoyM ZDC treatment variable  
-  4.4 DiD analysis and avoided deforestation   
-  4.5 maps treatment year and municipality  
+4. DiD analysis (builds upon 0.2)  
+  4.1 balanced panel for all municipalities inside the Amazon that had soybean planted throughout 2005-2018  
+  4.2 code SoyM ZDC treatment variable  
+  4.3 DiD analysis and avoided deforestation   
+  4.4 maps treatment year and municipality  
 
 
 

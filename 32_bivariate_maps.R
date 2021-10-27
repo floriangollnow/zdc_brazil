@@ -26,7 +26,7 @@ Matopiba <- muni_biome %>% filter ((Stat_bb=="MA"| Stat_bb=="TO"|Stat_bb=="PI"|S
 #trase
 trase25g <- read_rds (file.path (trase_dir, "MarketShare_annual_v1.rds"))#"MarketShare_annual_rates_allNew.rds"))
 #mammals
-mammals <- read_csv  (file.path (in_dir, "IUCN/all_threatened", "all_tvf_sr_muni.csv"), col_types = "ccd")
+mammals <- read_rds  (file.path (in_dir, "IUCN/all_threatened", "all_tvf_sr_muni.rds"))
 # combine
 trase25g_j <- trase25g %>% left_join(mammals,by=c("GEOCODE"="CD_GEOC"))
 trase25g_C <- trase25g_j %>% filter(Biome_lArea == "Cerrado")

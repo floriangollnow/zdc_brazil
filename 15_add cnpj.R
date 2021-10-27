@@ -16,4 +16,4 @@ CNPJ.tb.g <- CNPJ.tb %>%  group_by(main_cnpj) %>% summarise_at(vars(name, n_name
 trase25g_dh_cnpj <- trase25g_dh %>% left_join(CNPJ.tb.g, by=c("main_cnpj"="main_cnpj")) # 
 
 write_rds(trase25g_dh_cnpj, file.path (trase_dir , "trase_25_cnpj_GROUPED_processing_defH_cnpj.rds"))
-
+write_rds(trase25g_dh_cnpj, file.path ("Data", "trase_25_cnpj_GROUPED_processing_defH_cnpj.rds"))

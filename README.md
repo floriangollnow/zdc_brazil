@@ -7,7 +7,7 @@ replication and cleaning in progress (replication complete, cleaning in progress
 Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson and Rachael Garrett. Code was written by Florian Gollnow
 
 ## Data: 
-all data used are openly accessible. Replication data is available upon request.
+all data used are openly accessible. Replication data is available [here](https://www.dropbox.com/sh/irog673gk6yy5az/AAB9FTCjn-0Bg-6RSLIQoDUUa?dl=0). Other data is available on request.
 
 ## Dependencies
 Code was written in R 4.1.0, land use and deforestation data was extracted via Google Earth Engine (GEE). R Packages required include tidyverse, sf, raster, and did among others.

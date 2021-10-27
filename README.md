@@ -20,7 +20,7 @@ Code was written in R 4.1.0, land use and deforestation data was extracted via G
   0.4 GEE Mapbiomas soy-deforestation  
   0.5 reading GEE output  
   0.6 ***data combination and aggregation municipality (output provided in data folder)***    
-  0.7 ***Biomes-municiplaity intersection (output provided in data folder)***     
+  0.7 ***Biomes-municipality intersection (output provided in data folder)***     
 1. ***company analysis (builds upon 0.6 data preparation, use data from 1.5 for replication)***   
   1.1 CNPJ data preparation  
   1.2 CNPJ# Trase join  

@@ -25,14 +25,14 @@ Code was written in R 4.1.0, land use and deforestation data was extracted via G
   1.1 CNPJ data preparation  
   1.2 CNPJ# Trase join  
   1.3 Soy Infrastructure 
-  1.4 Deforestation hotspots  
+  1.4 Deforestation hot spots  
   1.5 ***add cnpj data (output provided in Data folder)***  
   1.6 create figures for manuscript  
-2. ***ZDC spatial coverage (builds on 0.6)***
+2. ***ZDC spatial coverage (builds on 0.6)***   
   2.1 forest suit adoption bias deforestation
 3. ***biodiversity analysis (builds upon 0.6 and 3.1)***   
   3.1 ***Species richness data output provided in Data folder)***    
-  3.2 Bivariate maps  
+  3.2 Bi-variate maps  
 4. ***DiD analysis (builds upon 0.6)***   
   4.1 balanced panel for all municipalities inside the Amazon that had soybean planted throughout 2005-2018  
   4.2 code SoyM ZDC treatment variable  

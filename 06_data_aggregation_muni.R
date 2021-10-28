@@ -88,8 +88,8 @@ MunSoyM_Share <- MunSoy %>%
 
 
 ## print aggregated ZDC market share 2018 (BIOME as defined by Trase)
-MunGZDC_T_Soy %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_GZDC_TRADER))/MunSoyE %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E))                    
-MunSOYM_T_Soy %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_SM_TRADER))/MunSoyE %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E))                    
+(MunGZDC_T_Soy %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_GZDC_TRADER)))/(MunSoyE %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E)))                  
+(MunSOYM_T_Soy %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_SM_TRADER)))/(MunSoyE %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E)))                    
 
 ## combine with all municipality dataset ('full')
 MunSOYMSoy_full <- full %>%  left_join(MunSoyM_Share, by= c("GEOCODE", "YEAR")) %>% left_join(ibgeMun_area, by= c("GEOCODE" = "CD_GEOCMU"))

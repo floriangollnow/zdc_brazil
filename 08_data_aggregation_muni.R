@@ -1,5 +1,5 @@
-# calculate ZDC market share and add deforestation and biome intersection (see script 07) to dataset for all years between 2002-2017
-# based on 01_data_preparation and 07_biome_municipality_intersection
+# calculate ZDC market share and add deforestation and biome intersection (see script 4.2) to dataset for all years between 2002-2017
+# based on 01_data_preparation and 4.2 biome
 
 library(tidyverse)
 library(scales)
@@ -88,8 +88,8 @@ MunSoyM_Share <- MunSoy %>%
 
 
 ## print aggregated ZDC market share 2018 (BIOME as defined by Trase)
-MunGZDC_T_Soy %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_GZDC_TRADER))/MunSoyE %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E))                    
-MunSOYM_T_Soy %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_SM_TRADER))/MunSoyE %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E))                    
+(MunGZDC_T_Soy %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_GZDC_TRADER)))/(MunSoyE %>% filter (BIOME=="CERRADO" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E)))                  
+(MunSOYM_T_Soy %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_SM_TRADER)))/(MunSoyE %>% filter (BIOME=="AMAZONIA" & YEAR==2018) %>% summarise(sum (SOY_EQUIVALENT_TONNES_E)))                    
 
 ## combine with all municipality dataset ('full')
 MunSOYMSoy_full <- full %>%  left_join(MunSoyM_Share, by= c("GEOCODE", "YEAR")) %>% left_join(ibgeMun_area, by= c("GEOCODE" = "CD_GEOCMU"))
@@ -180,7 +180,7 @@ MunSOYMSoy_full_g <- MunSOYMSoy_full_f %>% mutate(soyMtrader_share_50 = if_else(
 
 # write data ----
 #######################################################################################################################
-#write_rds(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.rds"))
-#write_csv(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.csv"))
-write_rds(MunSOYMSoy_full_g, file.path ("Data", "MarketShare_annual_v1.rds"))
+write_rds(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.rds"))
+write_csv(MunSOYMSoy_full_g, file.path (out, "MarketShare_annual_v1.csv"))
+
 

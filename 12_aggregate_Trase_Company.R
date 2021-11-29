@@ -1,4 +1,4 @@
-
+# aggregate Trase data by company (company characteristics)
 # builds on 01_data_preparation.R
 
 library(tidyverse)

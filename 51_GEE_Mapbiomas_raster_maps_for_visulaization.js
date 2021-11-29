@@ -1,3 +1,4 @@
+//preparing Study area maps
 //AMAZON & CERRADO raster identifying main LU and soy-deforestation  2001-2018
 
 var trans_a = ee.Image('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_transitions_v1') // used for deforestation

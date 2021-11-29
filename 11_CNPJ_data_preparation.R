@@ -1,4 +1,4 @@
-# read and prepare CNPJ data
+# read and prepare CNPJ data for RQ1
 
 library (tidyverse)
 library(data.table)

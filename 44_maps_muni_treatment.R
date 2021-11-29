@@ -1,4 +1,4 @@
-#mapp munis model treatment year
+#map municipalities first ZDC treatment year
 
 library(sf)
 library(tidyverse)

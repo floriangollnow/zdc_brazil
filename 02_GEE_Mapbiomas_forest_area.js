@@ -1,4 +1,5 @@
-//fooret area from Mapbomas transition maps
+//derive forest area from Mapbomas transition maps from GEE
+// forest was defined as forest in 2000, excluding secondary regrowth there after
 
 var trans_a = ee.Image('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_transitions_v1')
 

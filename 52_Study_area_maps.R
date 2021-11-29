@@ -1,5 +1,5 @@
 ## study area maps
-## maps soy def2000-2010-2019 and forest2019
+## maps soy deforestation 2000-2010-2019 and forest 2019
 
 library(raster)
 library(sf)
@@ -46,7 +46,7 @@ defS_m <- mask(defS, boundary)
 
 main_lu <-main_lum
 defS <- defS_m
-fq1 <- function(x, y) {#combine main LU and soy deforestaion, highlighting soy-deforestation by larger pixel size
+fq1 <- function(x, y) {#combine main LU and soy deforestation, highlighting soy-deforestation by larger pixel size
   z <- ifelse(y==1, 6, ifelse(y==2,7,x))}
 main_lu <- overlay(main_lu, defS, fun=fq1)
 
@@ -110,7 +110,7 @@ defS_m <- mask(defS, boundary)
 
 main_lu <-main_lum
 defS <- defS_m
-fq1 <- function(x, y) {#combine main LU and soy deforestaion, highlighting soy-deforestation by larger pixel size
+fq1 <- function(x, y) {#combine main LU and soy deforestation, highlighting soy-deforestation by larger pixel size
   z <- ifelse(y==1, 6, ifelse(y==2,7,x))}
 main_lu <- overlay(main_lu, defS, fun=fq1)
 

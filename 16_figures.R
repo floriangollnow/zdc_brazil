@@ -1,5 +1,4 @@
-
-# create final figures for company characteristics
+# create final figures for company characteristics (RQ1)
 
 library(tidyverse)
 library(ggforce)

@@ -1,5 +1,7 @@
-// 5 year deforestation for soy
-
+// deriving 5 year deforestation for soy 
+// deforestation was derived from Mapbiomas transition Mapbiomas
+// soy was derived from Mapbiomas
+// deforestation for soy was defined as any forest conversion that had soybeans planted within 5 years post conversion
 
 var MapBiomas = ee.Image ('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_integration_v1') // used for soy areas
 var trans_a = ee.Image('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_transitions_v1') // used for deforestation

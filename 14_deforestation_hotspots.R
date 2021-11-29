@@ -1,4 +1,5 @@
-# calculates deforestation hotspots annually by biome
+# calculates and adds deforestation hotspots annually by biome to company database
+
 
 library(tidyverse)
 

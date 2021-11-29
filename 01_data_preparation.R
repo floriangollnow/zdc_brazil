@@ -1,3 +1,4 @@
+# cleaning company names
 # Identifying ZDC companies
 # combining trase and CNPJ data 
 

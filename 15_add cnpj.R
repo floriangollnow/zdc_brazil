@@ -1,4 +1,4 @@
-## add cnpj information
+## add cnpj information to company database
 # https://m.sebrae.com.br/Sebrae/Portal%20Sebrae/UFs/SP/Pesquisas/MPE_conceito_empregados.pdf
 
 library(tidyverse)

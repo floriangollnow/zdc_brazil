@@ -1,4 +1,4 @@
-# DID
+# DID model run and calculating avoided deforestation (RQ3&4)
 
 library(tidyverse)
 library(did)

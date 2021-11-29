@@ -1,5 +1,6 @@
-## this script calculates a balanced panel indicator identifying all municipalities that had soybeans planted from 2005 throughout 2018. 
-## it reduces the data to those municipalities that are fully covered/within the Amazon biome
+## this script calculates a balanced panel identifying all municipalities that had soybeans planted from 2005 throughout 2018. 
+## it reduces the data to those municipalities that are fully covered/within the Amazon biome.
+
 library(tidyverse)
 library(sf)
 

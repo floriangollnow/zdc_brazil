@@ -1,7 +1,7 @@
-
 # intersecting Municipality 2015 shape with BIOMEs:
 # a) assigne municipalityes based on largest area of intersection
 # b) assigne municipalities to unique and combined biomes, for example Amazon (unique match) or Amazon-Cerrado for two intersections 
+
 library (tidyverse)
 library(sf)
 library (units)

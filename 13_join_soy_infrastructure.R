@@ -1,3 +1,4 @@
+# adds soybean infrastructure to company database
 
 library(tidyverse)
 library(lubridate)

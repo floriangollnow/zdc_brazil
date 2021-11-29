@@ -1,4 +1,4 @@
-# prepare species richness data
+# prepare species richness data (RQ2)
 
 library(tidyverse)
 library(sf)

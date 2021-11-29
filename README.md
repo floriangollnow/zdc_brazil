@@ -1,7 +1,7 @@
 Replication code for "Adoption and market coverage influence the effectiveness of supply chain policies" doi:XXX
 
 ## Status: 
-replication and cleaning in progress (replication complete, cleaning in progress)
+replication and cleaning in progress (replication complete, cleaning complete, brief descriptions present)
 
 ## Authors
 Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson and Rachael Garrett. Code was written by Florian Gollnow
@@ -13,16 +13,17 @@ all data used are openly accessible. Replication data is available [here](https:
 Code was written in R 4.1.0, land use and deforestation data was extracted via Google Earth Engine (GEE). R Packages required include tidyverse, sf, raster, and did among others.
 
 ## Summary of scripts 
-results from *italicize* scripts provided for result replication in *bold*   
+results from *italicize* scripts provided for result replication in *bold*. Scripts run sequential, with each main section beeing based on the main data preperation (section 0). 
 
 0. data preparation  
   0.1 reads trase data, consolidates company names, adds ZDCs, adds CNPJ  
   0.2 GEE Mapbiomas forest area  
   0.3 GEE Mapbiomas soy area  
   0.4 GEE Mapbiomas soy-deforestation  
-  0.5 reading GEE output  
-  0.6 *data combination and aggregation municipality (output provided in data folder)*      
+  0.5 GEE soy suitable forest
+  0.6 reading GEE output  
   0.7 *Biomes-municipality intersection (output provided in data folder)*  
+  0.8 *data combination and aggregation municipality (output provided in data folder)*      
 1. company analysis (builds upon 0.6 data preparation, use data from 1.5 for replication)   
   1.1 CNPJ data preparation  
   1.2 CNPJ# Trase join  

@@ -15,6 +15,15 @@ admin.dir <- "/Users/floriangollnow/Dropbox/ZDC_project/Data/Admin/IBGE/2015/br_
 
 ## trase
 trase25g <- read_rds (file.path (trase_dir, "MarketShare_annual_v1.rds"))
+#
+# soy production share Cerrado and amazon
+all2018 <- trase25g %>% filter (YEAR==2018) %>% summarise(soyha = sum(soy_ha))
+amazon2018 <- trase25g %>% filter (YEAR==2018, Biome_lArea == "Amazônia") %>% summarise(soyha = sum(soy_ha))
+cerrado2018 <- trase25g %>% filter (YEAR==2018, Biome_lArea == "Cerrado") %>% summarise(soyha = sum(soy_ha))
+amazon2018/all2018
+cerrado2018/all2018
+
+
 ## by Biome
 trase25g_C <- trase25g %>% filter(Biome_lArea == "Cerrado")
 trase25g_A <- trase25g %>% filter(Biome_lArea == "Amazônia")

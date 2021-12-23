@@ -33,15 +33,17 @@ results from *italicize* scripts provided for result replication in *bold*. Scri
   1.6 **create figures for manuscript**  
 2. ZDC spatial coverage (builds on 0.8)   
   2.1 forest suit adoption bias deforestation
-3. *biodiversity analysis (builds upon 0.7 and 3.1)*   
+3. *biodiversity analysis (builds upon 0.8 and 3.2)*   
   3.1 Species richness data intersection with Municipalities 
   3.2 GEE species range intersection with forest and soy-suitable forest
-  3.2 Quantifying overlap of species ranges with soy-suitable forests and ZDC market share  
+  3.3 ***Species richness forest municipalities (Quantifying overlap of species ranges with soy-suitable forests and ZDC market share)***
 4. DiD analysis (builds upon 0.8)   
   4.1 **balanced panel for all municipalities inside the Amazon that had soybean planted throughout 2005-2018**  
   4.2 **code SoyM ZDC treatment variable**  
   4.3 **DiD analysis and avoided deforestation**   
   4.4 maps treatment year and municipality  
+  4.5 municipality leakage (preparing neighborhood data)
+  4.6 ***NB_DiD (neighborhood analysis for estimating soy-deforestation leakage)*** 
 5. Study area map  
   5.1 GEE Mapbiomas raster maps for visualization  
   5.2 Study area maps   

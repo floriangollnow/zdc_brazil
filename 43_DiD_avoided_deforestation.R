@@ -36,7 +36,7 @@ ggplot ()+geom_point (data=MS_data, aes(YEAR, soyMtrader_share), color="blue")+
   theme (axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "bottom")
 
 ggsave(filename = file.path(down_file, "treatment_munis.png"), width=9, height=9 ,units = "cm", dpi=600,scale=2)
-# robustness to treatment coding! esetting those treatments to 0 if at more than half of the post treatment observations were untreated
+# robustness to treatment coding! setting those treatments to 0 if at more than half of the post treatment observations were untreated
 MS_data.df_3 <- MS_data.df %>% mutate (first_treat50= case_when(GEOCODE=="1100031" ~ 0,
                                                                 GEOCODE=="1101468" ~ 0,
                                                                 GEOCODE=="2100055" ~ 0,
@@ -190,6 +190,11 @@ ny_06<- ggdid(es, ylim = c(-4,4))+
 ggsave(filename = file.path(down_file, "W_log_def5_nTreat50_year06.png" ), width=9, height=9 ,units = "cm", dpi=600)
 
 # save all average time effect plots
+write_rds(ny_main,file.path (out_file,"ggplot","model_a.rds"))
+write_rds (n_main,file.path (out_file,"ggplot","model_b.rds"))
+write_rds (ny_3_main,file.path (out_file,"ggplot","model_c.rds"))
+write_rds (ny_06, file.path (out_file,"ggplot","model_d.rds"))
+
 effect_exposure <- ggarrange (ny_main+ggtitle("Model a") , n_main  +ggtitle("Model b"), ny_3_main  +ggtitle("Model c"), ny_06  +ggtitle("Model d"), nrow = 1, ncol=4)
 ggsave(filename = file.path(down_file, "effect_exposure.png" ), plot = effect_exposure, width=9*4, height=9 ,units = "cm", dpi=600)
 

@@ -2,7 +2,6 @@
 ## it reduces the data to those municipalities that are fully covered/within the Amazon biome.
 
 library(tidyverse)
-library(sf)
 
 # set directories
 out <-"/Users/floriangollnow/Dropbox/ZDC_project/DATA/TraseData2015/bulk_download2/BRAZIL_SOY_2.5.0_pc/Brazil_Soy_25_cnpj/"

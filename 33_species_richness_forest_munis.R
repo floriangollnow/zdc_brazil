@@ -1,3 +1,5 @@
+# calculate how much of the species ranges (clipped to forest 2018) intersects with soy-suitable forests and how the ZDC market share is in those areas/municiplaitues
+
 library(tidyverse)
 dir_iucn <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/IUCN/all_treatened_int_forest"
 dir_trase <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/TraseData2015/bulk_download2/BRAZIL_SOY_2.5.0_pc/Brazil_Soy_25_cnpj/"
@@ -61,16 +63,7 @@ species_cerrado <- cerrado_trase %>%
 tabulate <- species_cerrado %>% group_by (GZDCtrader_shareClass) %>% summarise(sum_forest= sum(forest), sum_suit_forest=sum(suit_forest), soy_ha = sum(soy_ha)) %>% 
   mutate(forestRange  =(sum_forest/sum (sum_forest))*100,suitforestRange  =(sum_suit_forest/sum (sum_suit_forest))*100, soy_ha =(soy_ha/sum(soy_ha))*100)
 tabulate 
-# gg_g_aptC <- ggplot()+
-#   geom_bar(data=tabulate , aes (y=suitforestRange, x=GZDCtrader_shareClass),stat = "identity", position='stack')+
-#   # scale_fill_brewer(palette = "Set2", labels=c( "without soy", "with soy"))+
-#   labs(title = "Cerrado: Species range in soy-suitable forest", x="ZDC market share", y="% range", fill="Municipality")+
-#   # geom_text(data=totalsdd, aes(x= soyMtrader_shareClass, y= (NPSUIT/1000)+2500),
-#   #           label=paste0(format (round(totalsdd$NPSUIT/1000, 0), big.mark=","),"kha\n (", round(totalsdd$percentF, 0),"%)"),
-#   #           size=3, show.legend = FALSE)+
-#   scale_x_discrete(drop = FALSE)+
-#   theme_minimal()
-# gg_g_aptC
+
 
 #### Amazon ####
 # delete those without forest
@@ -98,7 +91,6 @@ species_amazon %>% select (affected_perc) %>% pull() %>% sd() # 22.57
 
 # area
 species_amazon %>% select (forest, suit_forest) %>% summarise(forest=sum(forest), suit_forest=sum(suit_forest)) %>% mutate (perc= (suit_forest/forest)*100)
-
 
 species_amazon <- amazon_trase %>% 
   group_by(BINOMIAL, soyMtrader_shareClass) %>% 

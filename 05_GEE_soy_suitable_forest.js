@@ -1,4 +1,4 @@
-// assessing soy suitable forest by combining forest cover (Mapbiomas), GAEZ soy suitability and aptitude (Soares-Filho dataset) for mechanized crop production.
+// assessing soy suitable forest by combining forest cover (Mapbiomas), GAEZ soy suitability and aptitude (Soares-Filho et al 2014 dataset) for mechanized crop production.
 
 var shape = ee.FeatureCollection('users/floriangollnow/AdminBr/BRMUE250GC_WGS84')
 var grid = ee.FeatureCollection('users/floriangollnow/Fede/ERA5_grid_buf')

@@ -1,4 +1,4 @@
-# reading and combining mapbiomas v5 output from GEE.
+# reading and combining mapbiomas v5 output from GEE for .
 
 library(tidyverse)
 

@@ -1,5 +1,5 @@
 # prepare species richness data (RQ2)
-# intesect species ranges with muncipalities in teh Amazon and Cerrado (ressource intensive)
+# intesect species ranges with muncipalities in teh Amazon and Cerrado (resource intensive)
 library(tidyverse)
 library(sf)
 

@@ -13,7 +13,7 @@ all data used are openly accessible. Replication data is available [here](https:
 Code was written in R 4.1.0, land use and deforestation data was extracted via Google Earth Engine (GEE). R Packages required include tidyverse, sf, raster, and did among others.
 
 ## Summary of scripts 
-results from *italicize* scripts provided for result replication in *bold*. Scripts run sequential, with each main section beeing based on the main data preparation (section 0). 
+results from *italicized* scripts is provided [here](https://www.dropbox.com/sh/irog673gk6yy5az/AAB9FTCjn-0Bg-6RSLIQoDUUa?dl=0) for result replication in **bold**. Scripts run sequential, with each main section being based on the main data preparation (section 0). 
 
 0. data preparation  
   0.1 reads trase data, consolidates company names, adds ZDCs, adds CNPJ  
@@ -34,7 +34,7 @@ results from *italicize* scripts provided for result replication in *bold*. Scri
 2. ZDC spatial coverage (builds on 0.8)   
   2.1 forest suit adoption bias deforestation
 3. *biodiversity analysis (builds upon 0.8 and 3.2)*   
-  3.1 Species richness data intersection with Municipalities 
+  3.1 Species range data intersection with Municipalities 
   3.2 GEE species range intersection with forest and soy-suitable forest
   3.3 ***Species richness forest municipalities (Quantifying overlap of species ranges with soy-suitable forests and ZDC market share)***
 4. DiD analysis (builds upon 0.8)   

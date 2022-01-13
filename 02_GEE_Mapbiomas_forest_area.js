@@ -1,4 +1,4 @@
-//derive forest area from Mapbomas transition maps from GEE
+// derive forest area from Mapbomas transition maps from GEE
 // forest was defined as forest in 2000, excluding secondary regrowth there after
 
 var trans_a = ee.Image('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_transitions_v1')
@@ -10,7 +10,7 @@ print (MapBiomas.projection())
 //var shape = ee.FeatureCollection('users/floriangollnow/AdminBr/BRMUE250GC_WGS84_biome_intesect')
 var shape = ee.FeatureCollection('users/floriangollnow/AdminBr/BRMUE250GC_WGS84')// Brazil municipalities
 
-//Forest <- primary 2000
+// Forest <- primary 2000
 // transition maps include forest to forest transition. no need for lucc class
 
 var Mapb_2000 = trans_a.select('transition_2000_2001')

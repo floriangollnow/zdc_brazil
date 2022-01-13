@@ -1,4 +1,4 @@
-Replication code for (Gaps in adoption by smaller companies limit the current and potential effectiveness of zero-deforestation supply chain policies for soy}(https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4006677)
+Replication code for (Gaps in adoption by smaller companies limit the current and potential effectiveness of zero-deforestation supply chain policies for soy)(https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4006677)
 
 ## Status: 
 replication and cleaning in progress (replication complete, cleaning complete, brief descriptions present)

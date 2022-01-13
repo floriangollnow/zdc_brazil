@@ -62,9 +62,12 @@ trase25g_A18 <- trase25g_A %>% filter(YEAR==2018) %>% mutate(soyMtrader_shareCla
 Cerrado_bar <- trase25g_C18  %>%  group_by(GZDCtrader_shareClass) %>% 
   summarise(GAEZ_apt_forest_area_ha= sum(GAEZ_apt_forest_area_ha, na.rm=TRUE))
 
-totalsdd <- Cerrado_bar %>% group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
+totalsdd <- Cerrado_bar %>%  group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd <- totalsdd %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
-                                             percentF = ((NPSUIT/totalF)*100))
+                                             #totalF_no = totalF - totalsdd %>% filter(GZDCtrader_shareClass=="No soy") %>% pull(NPSUIT),
+                                             percentF = ((NPSUIT/totalF)*100)#,
+                                             #percentF_no = ((NPSUIT/totalF_no)*100)
+                                             )
 # area by ZDC class
 totalsdd 
 # total area in kha
@@ -85,9 +88,8 @@ gg_g_aptC <- ggplot()+
   theme_minimal()
 gg_g_aptC
 
-#only areas of ZDCs 
-totalsdd_zdc <- Cerrado_bar %>% filter (GZDCtrader_shareClass!="No soy" , 
-                                        GZDCtrader_shareClass!="0")%>% group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
+#only areas of soy  
+totalsdd_zdc <- Cerrado_bar %>% filter (GZDCtrader_shareClass!="No soy" )%>% group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd_zdc <- totalsdd_zdc %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
                                                      percentF = ((NPSUIT/totalF)*100))
 
@@ -96,7 +98,7 @@ totalsdd_zdc %>% filter (GZDCtrader_shareClass!=">0≤25",
   summarise(npsuit = sum(NPSUIT)/1000,
             npsuitp = sum(percentF))
 
-
+totalsdd_zdc
 
 
 ## Amazonia
@@ -123,12 +125,12 @@ gg_g_aptA <- ggplot()+
   theme_minimal()
 gg_g_aptA
 
-#only areas of ZDCs 
-totalsdd_zdc <- Amazon_bar %>% filter (soyMtrader_shareClass!="No soy" , 
-                                       soyMtrader_shareClass!="0")%>% group_by(soyMtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
+#only areas of soy  
+totalsdd_zdc <- Amazon_bar %>% filter (soyMtrader_shareClass!="No soy" )%>% group_by(soyMtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd_zdc <- totalsdd_zdc %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
                                                      percentF = ((NPSUIT/totalF)*100))
 
+totalsdd_zdc
 totalsdd_zdc %>% filter (soyMtrader_shareClass!=">0≤25",
                          soyMtrader_shareClass!=">25≤50")%>% ungroup () %>% 
   summarise(npsuit = sum(NPSUIT)/1000,

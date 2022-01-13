@@ -233,7 +233,7 @@ MarketShareData.time  <- MarketShareData.time %>% replace_na(list(first_treat50S
 # Amazon
 MarketShareData_A <-  MarketShareData.time %>% filter (Biome_lArea=="Amazônia", YEAR>=2006, YEAR<=2015) 
 ## calc avoided deforestation
-Stud_area_A <- MarketShareData_A %>% select (GEOCODE, YEAR, def4soyMT5_ha, first_treat50SoyM) %>% 
+Stud_area_A <- MarketShareData_A %>% select (GEOCODE, YEAR, defMT, def4soyMT5_ha, first_treat50SoyM) %>% 
   mutate (baselinDef= case_when(first_treat50SoyM!=0 & YEAR >= first_treat50SoyM~ (def4soyMT5_ha/( 1+ ATTeffect)),
                                 TRUE ~ def4soyMT5_ha),
           baselinDef_up = case_when(first_treat50SoyM!=0 & YEAR >= first_treat50SoyM ~ (def4soyMT5_ha/(1+overall_cband_upper )),
@@ -254,6 +254,8 @@ Stud_area_A %>% pull(avoidedDef ) %>% sum()
 Stud_area_A %>% pull(avoidedDef_up ) %>% sum()
 Stud_area_A %>% pull(avoidedDef_lower ) %>% sum()
 Stud_area_A %>% pull(def4soyMT5_ha) %>% sum()
+(Stud_area_A %>% pull(avoidedDef) %>% sum()/Stud_area_A %>% pull(defMT) %>% sum())*100
+
 ## percent reduction
 (Stud_area_A %>% pull(avoidedDef) %>% sum()/ 
     (Stud_area_A %>% pull(def4soyMT5_ha) %>% sum() +Stud_area_A %>% pull(avoidedDef)%>% sum()))*100

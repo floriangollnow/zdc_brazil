@@ -32,6 +32,11 @@ trase_A <- trase %>% filter(YEAR==2018) %>% mutate(soyMtrader_shareClass = case_
 
 # delete those without forest
 cerrado <- cerrado %>% filter (forest > 0)
+amazon <- amazon %>% filter (forest > 0)
+s_c <- cerrado %>% distinct(BINOMIAL)
+s_a <- amazon %>% distinct(BINOMIAL)
+
+species <- s_c %>% rbind(s_a) %>% pull(BINOMIAL) %>% n_distinct()
 
 #### Cerrado #### 
 # number of species in the cerrado
@@ -47,6 +52,16 @@ base-scenario
 # 3
 # how much % and area of the range is affected and how much in ZDC categories
 cerrado_trase <- cerrado %>% mutate(GEOCODE = as.character (CD_GEOC)) %>% left_join(trase_C, by =c("GEOCODE"="GEOCODE"))
+
+# how much is in soy_producing regions
+cerrado_trase %>% mutate(soyP = case_when(soy_ha>0 ~ TRUE,
+                                          TRUE ~ FALSE)) %>% group_by(GZDCtrader_shareClass) %>% summarise(sum=sum (suit_forest, na.rm=TRUE)) %>% mutate (sumF = sum(sum),
+                                                                                                                                         perc_outside = (sum/sumF)*100)
+cerrado_trase %>% mutate(soyP = case_when(soy_ha>0 ~ TRUE,
+                                          TRUE ~ FALSE)) %>% group_by(GZDCtrader_shareClass) %>% summarise(sum=n_distinct(GEOCODE))%>% mutate (sumM = sum(sum),
+                                                                                                                              perc_outside = (sum/sumM)*100)
+
+
 
 # percent
 species_cerrado <- cerrado %>% group_by(BINOMIAL) %>% summarise(forest = sum (forest, na.rm=T), suit_forest= sum (suit_forest, na.rm=TRUE)) %>% 
@@ -82,12 +97,21 @@ scenario <- amazon %>% filter (suit_forest > 0) %>%  distinct(BINOMIAL) %>% nrow
 base-scenario
 # 10
 # how much of the range is affected and how much in ZDC categories
-amazon_trase <- cerrado %>% mutate(GEOCODE = as.character (CD_GEOC)) %>% left_join(trase_A, by =c("GEOCODE"="GEOCODE"))
+amazon_trase <- amazon %>% mutate(GEOCODE = as.character (CD_GEOC)) %>% left_join(trase_A, by =c("GEOCODE"="GEOCODE"))
 
 species_amazon <- amazon %>% group_by(BINOMIAL) %>% summarise(forest = sum (forest, na.rm=T), suit_forest= sum (suit_forest, na.rm=TRUE)) %>% 
   mutate (affected_perc = (suit_forest/forest)*100)
 species_amazon %>% select (affected_perc) %>% pull() %>% mean() # 27.11
 species_amazon %>% select (affected_perc) %>% pull() %>% sd() # 22.57
+
+View(amazon_trase)
+amazon_trase %>% mutate(soyP = case_when(soy_ha>0 ~ TRUE,
+                                          TRUE ~ FALSE)) %>% group_by(soyMtrader_shareClass) %>% summarise(sum=sum (suit_forest, na.rm=TRUE)) %>% mutate (sumF = sum(sum),
+                                                                                                                                                          perc_outside = (sum/sumF)*100)
+amazon_trase %>% mutate(soyP = case_when(soy_ha>0 ~ TRUE,
+                                          TRUE ~ FALSE)) %>% group_by(soyMtrader_shareClass) %>% summarise(sum=n_distinct(GEOCODE))%>% mutate (sumM = sum(sum),
+                                                                                                                                               perc_outside = (sum/sumM)*100)
+
 
 # area
 species_amazon %>% select (forest, suit_forest) %>% summarise(forest=sum(forest), suit_forest=sum(suit_forest)) %>% mutate (perc= (suit_forest/forest)*100)

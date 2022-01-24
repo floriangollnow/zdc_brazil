@@ -14,7 +14,7 @@ all data used are openly accessible. Replication data is available [here](https:
 - IBGE data on agricultural production was downloaded from [sidra](https://sidra.ibge.gov.br/home/pms/brasil)
 - Mapbiomas LU-data can be found [here](https://mapbiomas.org/) and was prepared separately in [Google Earth Engine](https://earthengine.google.com/) 
 - Spatial admin data was derived from [IBGE](https://geoftp.ibge.gov.br/) and [MMA](https://www.gov.br/icmbio/pt-br/servicos/geoprocessamento/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais) 
-- Soy suitability data was derived from [GAEZ](https://www.gaez.iiasa.ac.at/) and [Soares-Filho et al. 2014](https://www.science.org/doi/10.1126/science.1246663) [available here](https://www.csr.ufmg.br/forestcode/)   
+- Soy suitability data was derived from [GAEZ](https://www.gaez.iiasa.ac.at/) and [Soares-Filho et al. 2014](https://www.science.org/doi/10.1126/science.1246663) available [here](https://www.csr.ufmg.br/forestcode/)   
 - Species range data was derived from [IUCN](https://www.iucnredlist.org/)
 - Company [CNPJ](https://www.gov.br/receitafederal/pt-br) data was derived form [here](https://rdrr.io/github/georgevbsantiago/qsacnpj/f/README.Rmd)
 

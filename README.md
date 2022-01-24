@@ -1,15 +1,15 @@
 Replication code for [Gaps in adoption by smaller companies limit the current and potential effectiveness of zero-deforestation supply chain policies for soy](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4006677)
 
-## Status: 
+## Status 
 replication and cleaning in progress (replication complete, cleaning complete, brief descriptions present)
 
 ## Authors
 Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson and Rachael Garrett. Code was written by Florian Gollnow
 
-## Data: 
+## Data 
 all data used are openly accessible. Replication data is available [here](https://www.dropbox.com/sh/irog673gk6yy5az/AAB9FTCjn-0Bg-6RSLIQoDUUa?dl=0). Other data is available on request.
 
-### Data sources:      
+### Data sources      
 - Trade data was derived from [trase.earth](https://www.trase.earth/) 
 - IBGE data on agricultural production was downloaded from [sidra](https://sidra.ibge.gov.br/home/pms/brasil)
 - Mapbiomas LU-data can be found [here](https://mapbiomas.org/) and was prepared separately in [Google Earth Engine](https://earthengine.google.com/) 

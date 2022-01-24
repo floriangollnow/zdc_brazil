@@ -9,6 +9,15 @@ Analysis was designed by Florian Gollnow, Federico Cammelli, Kimberly Carlson an
 ## Data: 
 all data used are openly accessible. Replication data is available [here](https://www.dropbox.com/sh/irog673gk6yy5az/AAB9FTCjn-0Bg-6RSLIQoDUUa?dl=0). Other data is available on request.
 
+### Data sources:      
+- Trade data was derived from [trase.earth](https://www.trase.earth/) 
+- IBGE data on agricultural production was downloaded from [sidra](https://sidra.ibge.gov.br/home/pms/brasil)
+- Mapbiomas LU-data can be found [here](https://mapbiomas.org/) and was prepared separately in [Google Earth Engine](https://earthengine.google.com/) 
+- Spatial admin data was derived from [IBGE](https://geoftp.ibge.gov.br/) and [MMA](https://www.gov.br/icmbio/pt-br/servicos/geoprocessamento/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais) 
+- Soy suitability data was derived from [GAEZ](https://www.gaez.iiasa.ac.at/) and [Soares-Filho et al. 2014](https://www.science.org/doi/10.1126/science.1246663)[available here](https://www.csr.ufmg.br/forestcode/)   
+- Species range data was derived from [IUCN](https://www.iucnredlist.org/)
+
+
 ## Dependencies
 Code was written in R 4.1.0, land use and deforestation data was extracted via Google Earth Engine (GEE). R Packages required include tidyverse, sf, raster, and did among others.
 

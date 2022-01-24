@@ -1,5 +1,5 @@
 # prepare species range data (RQ2)
-# intesect species ranges with muncipalities in the Amazon and Cerrado (resource intensive)
+# intersect species ranges with municipalities in the Amazon and Cerrado (resource intensive)
 library(tidyverse)
 library(sf)
 
@@ -9,18 +9,20 @@ dir_biome <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/Biomes/Biomes"
 
 iucn <- read_sf(file.path (dir_iucn, "data_0.shp"))# derived from https://www.iucnredlist.org/
 biome <- read_sf (file.path(dir_biome, "Brazil_Biomes.shp"))
-
 admin <- read_sf (file.path(dir_admin, "BRMUE250GC_all_biomes_WGS84.shp"))
 
+# reduce to Cerrado and Amazon
 admin<- admin %>% filter(Bim_lAr=="Cerrado"| Bim_lAr=="Amazônia")
 admin <- admin %>% group_by(CD_GEOC, Bim_lAr) %>% summarize()
-
+# reduce to species present
 iucn_present <- iucn %>% filter(PRESENCE  ==1)
 
 # how many species per biome
 biome_iucn <- biome %>% st_intersection(iucn_present)
-biome_iucn %>% filter(name=="Cerrado") %>% distinct(BINOMIAL) #%>% nrow()
-biome_iucn %>% filter(name=="Amazônia") %>% distinct(BINOMIAL) %>% nrow()
+biome_iucn %>% filter(name=="Cerrado") %>% distinct(BINOMIAL) #%>% nrow() #169
+biome_iucn %>% filter(name=="Amazônia") %>% distinct(BINOMIAL) %>% nrow()# 169
+biome_iucn %>% distinct(BINOMIAL) %>% nrow() #406
+
 
 # intersect municipalities and species ranges
 all(st_is_valid(iucn_present))

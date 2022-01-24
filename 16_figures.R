@@ -64,20 +64,20 @@ trase25g_dh_amazon_def_risk <- trase25g_dh_amazon_def_risk %>% ungroup()
 table(trase25g_dh_amazon_def_risk$SoyM, trase25g_dh_amazon_def_risk$n_processingAm_18)
 
 ## shared value and soy exports
-dots <- 3
+dots <- 1.5
 
 #annual soy exports
 a<- ggplot(trase25g_dh_amazon_def_risk, aes(SoyM,SExport_year/1000 ))+
   geom_violin ( aes(fill=SoyM), show.legend = F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5) +
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_y_log10(labels = comma, limits=c(0.01,10000))+
   theme_bw()+
-  labs(title= "Annual soy exports") + #
-  scale_x_discrete(labels = c('No-Soy Moratorium','Soy Moratorium'))+
+  labs(subtitle= "Annual soy exports") + #
+  scale_x_discrete(labels = c('No-SoyM','SoyM'))+
   xlab(NULL)+ ylab("ktons (log scale)")+
-  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "left", size=3)+
+  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=4, label="p.format")+
   annotation_logticks(sides = "l")  
 
 a
@@ -85,33 +85,33 @@ a
 # companies share value
 b<- ggplot(trase25g_dh_amazon_def_risk, aes(SoyM , capital_social_c/1000000 ))+
   geom_violin ( aes(fill=SoyM), show.legend = F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5) +
   #scale_fill_viridis_d( alpha=0.4, name= "ZD commitment", labels = c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_y_log10(labels = comma)+
   theme_bw()+
-  labs(title= "Company share value") + #2018
-  scale_x_discrete(labels = c('No-Soy Moratorium','Soy Moratorium'))+
+  labs(subtitle= "Company share value") + #2018
+  scale_x_discrete(labels = c('No-SoyM','SoyM'))+
   xlab(NULL)+ ylab("MBRL (log scale)")+
   annotation_logticks(sides = "l")  +
-  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=3)
+  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=4, label = "p.format")
 b
 
 # exports from deforestation hotspost
 d1<- ggplot(trase25g_dh_amazon_def_risk, aes(SoyM ,Exp_Def_Hot_perc))+
   geom_violin ( aes(fill=SoyM), show.legend = F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5, outlier.shape = NA) +
   #scale_fill_viridis_d( alpha=0.4, name= "ZD commitment", labels = c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   #scale_y_log10(labels = comma, limits=c(0.01,10000))+
   theme_bw()+
-  labs(title= "Soy exports from\ndeforestation hotspots") + #
-  scale_x_discrete(labels = c('No-Soy Moratorium','Soy Moratorium'))+
+  labs(subtitle= "Soy exports from\ndeforestation hotspots") + #
+  scale_x_discrete(labels = c('No-SoyM','SoyM'))+
   xlab(NULL)+ ylab("%")+
   #annotation_logticks(sides = "l")  +
-  stat_compare_means( method ="wilcox.test", label.y.npc = "top",label.x.npc = "center", size=3)
+  stat_compare_means( method ="wilcox.test", label.y.npc = 0.97,label.x.npc = "center", size=4, label = "p.format")
 d1
 
 
@@ -126,7 +126,7 @@ e <- ggplot (infr_l_agg, aes(fill=SoyM ,type , count  ))+
   #scale_fill_viridis_d(alpha = 0.5,name= "ZD commitment", labels = c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_x_discrete(labels=c("P.", "P.dh.", "S.", "S.dh.")) +
-  labs(title= "Soy infrastructure", x=NULL) + #
+  labs(subtitle= "Soy infrastructure", x=NULL) + #
   theme_bw()#+
 e
 # combine figures
@@ -195,48 +195,48 @@ table(trase25g_dh_cerrado_def_risk$G_ZDC, trase25g_dh_cerrado_def_risk$n_process
 # soy export volumnes
 a_c<- ggplot(trase25g_dh_cerrado_def_risk, aes(G_ZDC,SExport_year/1000 ))+
   geom_violin ( aes(fill=G_ZDC), show.legend = F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5) +
   #scale_fill_viridis_d( alpha=0.4, name= "ZD commitment", label = c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_y_log10(labels = comma, limits=c(0.01,10000))+
   theme_bw()+
-  labs(title= "Annual soy exports") + #
+  labs(subtitle= "Annual soy exports") + #
   scale_x_discrete(labels = c('No-ZDC','ZDC'))+
   xlab(NULL)+ ylab("ktons (log scale)")+
   annotation_logticks(sides = "l")    +
-  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "left", size=3)
+  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=4,label="p.format")
 a_c
 # companies share value
 b_c<- ggplot(trase25g_dh_cerrado_def_risk, aes(G_ZDC , capital_social_c/1000000 ))+
   geom_violin ( aes(fill=G_ZDC), show.legend = F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5) +
   #scale_fill_viridis_d( alpha=0.4, name= "ZD commitment", label=c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_y_log10(labels = comma)+
   theme_bw()+
-  labs(title= "Company share value") + #
+  labs(subtitle= "Company share value") + #
   scale_x_discrete(labels = c('No-ZDC','ZDC'))+
   xlab(NULL)+ ylab("MBRL (log scale)")+
   annotation_logticks(sides = "l")    +
-  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=3)
+  stat_compare_means( method ="wilcox.test", label.y.npc = "bottom",label.x.npc = "center", size=4, label="p.format")
 b_c
 
 #export from deforestation hotspots
 d1_c<- ggplot(trase25g_dh_cerrado_def_risk, aes(G_ZDC ,Exp_Def_Hot_perc))+
   geom_violin ( aes(fill=G_ZDC),  show.legend=F)+
-  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=3)+
+  geom_quasirandom(color="blue", alpha = 0.7, width = 0.1,  size=dots)+
   geom_boxplot(width=0.1, fill="transparent", alpha=0.5) +
   #scale_fill_viridis_d( alpha=0.4, name= "ZD commitment", labels= c("NO", "YES"))+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   #scale_y_log10(labels = comma, limits=c(0.01,10000))+
   theme_bw()+
-  labs(title= "Soy exports from\ndeforestation hotspots") + #
+  labs(subtitle= "Soy exports from\ndeforestation hotspots") + #
   scale_x_discrete(labels = c('No-ZDC','ZDC'))+
   xlab(NULL)+ ylab("%")+
   #annotation_logticks(sides = "l")  +
-  stat_compare_means( method ="wilcox.test", label.y.npc = "top",label.x.npc = "center", size=3)
+  stat_compare_means( method ="wilcox.test", label.y.npc = 0.97,label.x.npc = "center", size=4, label="p.format")
 
 d1_c
 
@@ -248,10 +248,9 @@ infr_l_agg <- infr_l %>% group_by(G_ZDC, type) %>% summarise(count = sum(count, 
 
 e_c <- ggplot (infr_l_agg, aes(fill=G_ZDC ,type , count  ))+
   geom_bar(position="dodge", stat="identity")+
-  #scale_fill_viridis_d(alpha = 0.5,name= "ZD commitment")+
   scale_fill_brewer(palette = "Set2", name= "ZDC", label=c("NO", "YES"))+
   scale_x_discrete(labels=c("P.", "P.dh.", "S.", "S.dh.")) +
-  labs(title= "Soy infrastructure", x=NULL) + #
+  labs(subtitle= "Soy infrastructure", x=NULL) + #
   theme_bw()#+
 e_c
 # combine figures
@@ -266,5 +265,5 @@ ggsave(file.path(dir_plot, "Cerrado_traders.png"), plot= figure_b, width = 15 ,h
 #combine Amazon and Cerrado
 figure_ab <- ggarrange(figure_a , figure_b, heights = c(0.945,1.055), common.legend = TRUE, nrow = 2, ncol=1, align="hv")
 figure_ab
-ggsave(file.path(dir_plot, "Amazon_Cerrado_traders_v1.png"), plot= figure_ab, width = 11, height = 7, units = 'cm', dpi=600, scale=3 , bg="white")
+ggsave(file.path(dir_plot, "Amazon_Cerrado_traders_v1.png"), plot= figure_ab, width = 11, height = 7, units = 'cm', dpi=600, scale=2.3 , bg="white")
 

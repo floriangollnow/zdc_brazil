@@ -1,7 +1,9 @@
-# assessing soy suitable forest across ZDC categories. (RQ2)
+# assessing soy suitable forest across ZDC categories in the Brazilian Cerrado and Amazon (RQ2) ----
+# 127 following: selection bias based on municipality forest cover? -----
+# 175 following: overall and soy-deforestation categorized by ZDC class -----
+
 
 library(tidyverse)
-#library(sf)
 library(ggpubr)
 library(ggbeeswarm)
 library(Hmisc)
@@ -30,7 +32,7 @@ trase25g_A <- trase25g %>% filter(Biome_lArea == "Amazônia")
 
 
 # Cerrado
-# select 2018 with soy and buikd ZDC classes
+# select 2018 with soy and build ZDC classes
 trase25g_C18 <- trase25g_C %>% filter(YEAR==2018) %>% mutate(GZDCtrader_shareClass = case_when(soy_ha==0 ~ "No soy",
                                                                                                GZDCtrader_share==0| is.na(GZDCtrader_share) ~"0",
                                                                                                GZDCtrader_share>0 & GZDCtrader_share<=25~ paste0(">0","\U2264", "25"),
@@ -64,23 +66,15 @@ Cerrado_bar <- trase25g_C18  %>%  group_by(GZDCtrader_shareClass) %>%
 
 totalsdd <- Cerrado_bar %>%  group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd <- totalsdd %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
-                                             #totalF_no = totalF - totalsdd %>% filter(GZDCtrader_shareClass=="No soy") %>% pull(NPSUIT),
-                                             percentF = ((NPSUIT/totalF)*100)#,
-                                             #percentF_no = ((NPSUIT/totalF_no)*100)
-                                             )
+                                             percentF = ((NPSUIT/totalF)*100))
 # area by ZDC class
 totalsdd 
 # total area in kha
 totalsdd %>% summarise(npsuit = sum(NPSUIT)/1000)
-# total area without no-soy and 0% class
-totalsdd %>% filter (GZDCtrader_shareClass!="No soy",
-                     GZDCtrader_shareClass!="0")%>% ungroup () %>% 
-  summarise(npsuit = sum(NPSUIT)/1000,
-            npsuitp = sum(percentF))
+
 
 gg_g_aptC <- ggplot()+
   geom_bar(data=Cerrado_bar , aes (y=GAEZ_apt_forest_area_ha/1000, x=GZDCtrader_shareClass),stat = "identity", position='stack')+
-  #scale_fill_brewer(palette = "Set2", labels=c( "without soy", "with soy"))+
   labs(title = "Cerrado: Soy-suitable forest", x="ZDC market share", y="Forest kha", fill="Municipality")+
   geom_text(data=totalsdd, aes(x= GZDCtrader_shareClass, y= (NPSUIT/1000)+1500),
             label=paste0(format (round(totalsdd$NPSUIT/1000, 0), big.mark=","),"kha\n (", round(totalsdd$percentF, 0),"%)"),
@@ -88,15 +82,11 @@ gg_g_aptC <- ggplot()+
   theme_minimal()
 gg_g_aptC
 
-#only areas of soy  
+#### Table 1
+# only municipalities of soy-production  
 totalsdd_zdc <- Cerrado_bar %>% filter (GZDCtrader_shareClass!="No soy" )%>% group_by(GZDCtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd_zdc <- totalsdd_zdc %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
                                                      percentF = ((NPSUIT/totalF)*100))
-
-totalsdd_zdc %>% filter (GZDCtrader_shareClass!=">0≤25",
-                         GZDCtrader_shareClass!=">25≤50")%>% ungroup () %>% 
-  summarise(npsuit = sum(NPSUIT)/1000,
-            npsuitp = sum(percentF))
 
 totalsdd_zdc
 
@@ -107,16 +97,9 @@ Amazon_bar <- trase25g_A18  %>%  group_by(soyMtrader_shareClass) %>% summarise(G
 totalsdd <- Amazon_bar %>% group_by(soyMtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd <- totalsdd %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
                                              percentF = ((NPSUIT/totalF)*100))
-totalsdd %>% summarise(npsuit = sum(NPSUIT)/1000)
-totalsdd %>% filter (soyMtrader_shareClass!="No soy",
-                     soyMtrader_shareClass!="0")%>% ungroup () %>% 
-  summarise(npsuit = sum(NPSUIT)/1000,
-            npsuitp = sum(percentF))
-
 
 gg_g_aptA <- ggplot()+
   geom_bar(data=Amazon_bar , aes (y=GAEZ_apt_forest_area_ha/1000, x=soyMtrader_shareClass),stat = "identity", position='stack')+
-  # scale_fill_brewer(palette = "Set2", labels=c( "without soy", "with soy"))+
   labs(title = "Amazon: Soy-suitable forest", x="ZDC market share", y="Forest kha", fill="Municipality")+
   geom_text(data=totalsdd, aes(x= soyMtrader_shareClass, y= (NPSUIT/1000)+2500),
             label=paste0(format (round(totalsdd$NPSUIT/1000, 0), big.mark=","),"kha\n (", round(totalsdd$percentF, 0),"%)"),
@@ -125,21 +108,18 @@ gg_g_aptA <- ggplot()+
   theme_minimal()
 gg_g_aptA
 
-#only areas of soy  
+#### Table 1
+# only municipalities of soy-production  
 totalsdd_zdc <- Amazon_bar %>% filter (soyMtrader_shareClass!="No soy" )%>% group_by(soyMtrader_shareClass)%>% summarise (NPSUIT = sum(GAEZ_apt_forest_area_ha))
 totalsdd_zdc <- totalsdd_zdc %>% ungroup()%>% mutate(totalF = sum(NPSUIT),
                                                      percentF = ((NPSUIT/totalF)*100))
 
 totalsdd_zdc
-totalsdd_zdc %>% filter (soyMtrader_shareClass!=">0≤25",
-                         soyMtrader_shareClass!=">25≤50")%>% ungroup () %>% 
-  summarise(npsuit = sum(NPSUIT)/1000,
-            npsuitp = sum(percentF))
-
 
 gg_CA <- ggarrange(gg_g_aptC,gg_g_aptA, ncol=2, nrow = 1, labels = "auto",common.legend = TRUE)
 ggsave (filename = file.path(dir_plot, "suit_forest_cm.png"),plot=gg_CA, width = 11, height = 6 , units = "cm", dpi=600, scale=2)
 ggsave (filename = file.path(dir_plot, "suit_forest_cm.tiff"),plot=gg_CA, width = 11, height = 6 , units = "cm", dpi=600, scale=2)
+
 
 
 
@@ -151,7 +131,6 @@ trase25g_C18 %>% group_by(GZDCtrader_shareClass) %>% summarise(M=round(mean(fore
                                                                s = round(sd (forestMT_perc), 0))
 
 gg_SB_C <- ggplot(data=trase25g_C18, aes(y= forestMT_perc, x=GZDCtrader_shareClass))+
-  #geom_jitter(data=trase25g_C18, aes(y= pasture_perc, x=GZDCtrader_shareClass))+
   geom_quasirandom(data=trase25g_C18, aes(y= forestMT_perc, x=GZDCtrader_shareClass), alpha = 0.7, width = 0.30,  size=2, col="#FC8D62")+
   #scale_color_continuous(type="viridis")+
   geom_violin(data=trase25g_C18, aes(y= forestMT_perc, x=GZDCtrader_shareClass), fill=NA, color="grey30")+
@@ -170,10 +149,7 @@ trase25g_A18 %>% group_by(soyMtrader_shareClass) %>% summarise(M=round(mean(fore
 
 
 gg_SB_A<-  ggplot(data=trase25g_A18, aes(y= forestMT_perc, x=soyMtrader_shareClass))+
-  #geom_jitter(data=trase25g_C18, aes(y= pasture_perc, x=GZDCtrader_shareClass))+
   geom_quasirandom(data=trase25g_A18, aes(y= forestMT_perc, x=soyMtrader_shareClass), alpha = 0.7, width = 0.30,  size=2, col="#FC8D62")+
-  #scale_color_continuous(type="viridis")+
-  
   geom_violin(data=trase25g_A18, aes(y= forestMT_perc, x=soyMtrader_shareClass), fill=NA, color="grey30",width = 1)+
   geom_boxplot( width=0.20, alpha=0.5,outlier.shape = NA)+
   stat_compare_means(comparisons = list( c("No soy", paste0(">75","\U2264", "100")),
@@ -181,7 +157,6 @@ gg_SB_A<-  ggplot(data=trase25g_A18, aes(y= forestMT_perc, x=soyMtrader_shareCla
                                          #c(paste0(">0","\U2264", "25"),paste0(">75","\U2264", "100")),
                                          c(paste0(">25","\U2264", "50"),paste0(">75","\U2264", "100")),
                                          c(paste0(">50","\U2264", "75"),paste0(">75","\U2264", "100"))), method ="wilcox.test")+
-  #stat_compare_means(label.y = 135,)+
   scale_x_discrete(drop=FALSE)+
   labs(title = "Amazon: Municipality forest cover 2018", y= "Forest %", x="ZDC market share")+
   theme_minimal()

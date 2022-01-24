@@ -329,7 +329,7 @@ Export.image.toDrive({
   maxPixels: 2e10,
   region: ama
 });
-
+/*
 // only soy def, all else NA
 
 var stacked_soydef_only = stacked_Def.gt(2000).add(stacked_Def.gt(2010));// 1 soy def >2000<=2010, 2 soy def>2010
@@ -369,3 +369,4 @@ Export.image.toDrive({
   maxPixels: 2e10,
   region: ama
 });
+*/

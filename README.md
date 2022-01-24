@@ -33,7 +33,7 @@ results from *italicized* scripts is provided [here](https://www.dropbox.com/sh/
   1.6 **create figures for manuscript**  
 2. ZDC spatial coverage (builds on 0.8)   
   2.1 forest suit adoption bias deforestation
-3. *biodiversity analysis (builds upon 0.8 and 3.2)*   
+3. *Biodiversity analysis (builds upon 0.8 and 3.2)*   
   3.1 Species range data intersection with Municipalities 
   3.2 GEE species range intersection with forest and soy-suitable forest
   3.3 ***Species richness forest municipalities (Quantifying overlap of species ranges with soy-suitable forests and ZDC market share)***

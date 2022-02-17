@@ -9,7 +9,7 @@ trase25 <- read_rds(file.path (trase_dir, "trase_25_cnpj_v01.rds")) %>% ungroup(
 
 # summarize it all for unique exporters and export locations for each year
 
-trase25g <- trase25 %>% group_by_at(vars(c(YEAR:MUNICIPALITY, GEOCODE:nCNPJ))) %>% # removing economic block and export location: COUNTRY, `ECONOMIC BLOC`,
+trase25g <- trase25 %>% group_by_at(vars(c(YEAR:MUNICIPALITY, GEOCODE:nCNPJ, COUNTRY, `ECONOMIC BLOC`))) %>% # removing economic block and export location: COUNTRY, `ECONOMIC BLOC`,
   summarise(Stons= sum(SOY_EQUIVALENT_TONNES, na.rm=TRUE),
             FOB_USD= sum(FOB_USD, na.rm=TRUE),
             LU_ha = sum(LAND_USE_HA, na.rm=TRUE),

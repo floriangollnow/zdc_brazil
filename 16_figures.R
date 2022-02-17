@@ -140,7 +140,63 @@ ggsave(file.path(dir_plot, "Amazon_traders.png"), plot= figure_a, width = 15 ,he
 
 
 ###
+#export block
+`EU plus` <- c("EUROPEAN UNION" ,"NORWAY" , "SWITZERLAND") 
 
+`North America` <- c("UNITED STATES" , "PACIFIC ISLANDS (USA)", "CANADA")
+`South & central America` <- c("BOLIVIA", "ARGENTINA", "MEXICO", "DOMINICAN REPUBLIC", "COLOMBIA" , "PANAMA", "VENEZUELA", "CHILE", "COSTA RICA", "CUBA",  "PARAGUAY", "URUGUAY",
+                             "GUYANA", "HONDURAS", "ECUADOR", "GUATEMALA", "CAYMAN ISLANDS", "BAHAMAS", "EL SALVADOR", "PERU", "EQUATORIAL GUINEA", "NICARAGUA", "NETHERLANDS ANTILLES", "SURINAME", 
+                             "VIRGIN ISLANDS (UK)","SAINT LUCIA", "BELIZE", "TRINIDAD AND TOBAGO", "ANTIGUA AND BARBUDA", "HAITI", "ST. KITTS AND NEVIS")
+
+Africa <- c("MAURITIUS", "SENEGAL" , "SOUTH AFRICA" ,"MADAGASCAR", "MOROCCO", "EGYPT" , "MARTINIQUE" ,"TUNISIA" , "CAPE VERDE", "SUDAN", "MOZAMBIQUE" ,"CAMEROON", "ALGERIA", "ANGOLA", "NIGERIA",
+            "MAURITANIA", "GUINEA", "GHANA", "KENYA", "GAMBIA","LIBYA", "COTE D'IVOIRE", "TANZANIA", "NAMIBIA", "CONGO", "GUINEA-BISSAU", "LIBERIA")
+
+China <- c("CHINA (MAINLAND)" ,"CHINA (HONG KONG)")
+
+Asia <-  c("BANGLADESH" , "ISRAEL", "INDIA" , "IRAN", "SOUTH KOREA" ,"TAIWAN", "JAPAN", "PAKISTAN" ,"UNITED ARAB EMIRATES" ,"NORTH KOREA", "SAUDI ARABIA", "THAILAND", "INDONESIA","MALAYSIA", "SYRIA",
+           "LEBANON", "TURKEY", "YEMEN", "GEORGIA", "RUSSIAN FEDERATION", "JAMAICA", "VIETNAM", "SINGAPORE", "JORDAN", "OMAN", "AZERBAIJAN", "IRAQ", "TURKS AND CAICOS ISLANDS", "UZBEKISTAN", "KUWAIT" ,
+           "ALBANIA", "MYANMAR" , "SRI LANKA",  "CAMBODIA", "NEPAL") 
+
+Oceania <- c("AUSTRALIA", "NEW ZEALAND", "FIJI", "PHILIPPINES" , "NEW CALEDONIA", "BAHRAIN", "MARSHALL ISLANDS")
+
+`EU other` <- c("UKRAINE","GIBRALTAR", "BOSNIA AND HERZEGOVINA", "MACEDONIA", "ISLE OF MAN")
+
+Brazil <- c("BRAZIL")
+
+Unknown <- c("UNKNOWN COUNTRY")
+
+trase25g_dh_amazon_export <- trase25g_dh_cnpj.g %>% filter(YEAR>=2016 & YEAR<=2018& BIOME=="AMAZONIA" & N_EXPORTER!="DOMESTIC CONSUMPTION", `ECONOMIC BLOC`!="BRAZIL" ) %>% 
+          mutate (ExportRegions= case_when(
+            #`ECONOMIC BLOC` =="BRAZIL" ~ "Domestic",
+            `ECONOMIC BLOC` %in% `EU plus` ~ "EU plus",
+            `ECONOMIC BLOC` %in% China   ~ "China" ,# & Hong Kong",
+            `ECONOMIC BLOC` %in% `North America` ~"Americas",
+            `ECONOMIC BLOC` %in% `South & central America` ~"Americas",
+            `ECONOMIC BLOC` %in% Africa ~ "Africa",
+            `ECONOMIC BLOC` %in% Asia ~ "Asia\n(excl. China)",
+            `ECONOMIC BLOC` %in% Oceania ~ "Oceania",
+            `ECONOMIC BLOC` %in% `EU other` ~ "Europe\n(excl. EU plus)",
+            `ECONOMIC BLOC` %in% `Unknown` ~ "Unknown",
+            TRUE ~ `ECONOMIC BLOC`
+ )) %>% mutate (ExportRegions= factor(ExportRegions, 
+                                      levels=c("China", "EU plus", "Asia\n(excl. China)" , "Oceania","Africa", "Americas" ,"Europe\n(excl. EU plus)", "Unknown")))
+trase25g_dh_amazon_export_ZDC <- trase25g_dh_amazon_export %>%   group_by(N_EXPORTER, ExportRegions, SoyM) %>% #N_EXPORTER,
+  summarise (Years_A = n_distinct(YEAR),
+             SExport_year= sum (Stons, na.rm=TRUE),
+  )
+trase25g_dh_amazon_export_all <- trase25g_dh_amazon_export %>%   ungroup()%>% group_by(N_EXPORTER) %>% #N_EXPORTER,
+  summarise (Years_A = n_distinct(YEAR),
+             SExport_year_all= sum (Stons, na.rm=TRUE),
+  ) %>% select (-Years_A)
+trase25g_dh_amazon_export_ZDC <- trase25g_dh_amazon_export_ZDC %>% left_join(trase25g_dh_amazon_export_all) %>% 
+  mutate(SExport_year_share = (SExport_year / SExport_year_all)*100)
+
+ggExA <-ggplot(trase25g_dh_amazon_export_ZDC )+geom_boxplot(aes(ExportRegions, SExport_year_share, fill=SoyM))+
+          scale_x_discrete(drop=FALSE)+ 
+          scale_fill_discrete(drop=FALSE, label=c("No","Yes")) +
+          labs(y= "Soy export share % ", x=NULL, subtitle = "Amazon",fill="SoyM/ZDC")+
+          theme_bw()
+ggExA
 
 ##########################
 #  Cerrado ----------------
@@ -267,3 +323,39 @@ figure_ab <- ggarrange(figure_a , figure_b, heights = c(0.945,1.055), common.leg
 figure_ab
 ggsave(file.path(dir_plot, "Amazon_Cerrado_traders_v1.png"), plot= figure_ab, width = 11, height = 7, units = 'cm', dpi=600, scale=2.3 , bg="white")
 
+####
+#export regions cerrado
+trase25g_dh_cerrado_export <- trase25g_dh_cnpj.g %>% filter(YEAR>=2016 &  YEAR<=2018& BIOME=="CERRADO" & N_EXPORTER!="DOMESTIC CONSUMPTION",`ECONOMIC BLOC`!="BRAZIL" ) %>% 
+  mutate (ExportRegions= case_when(
+    #`ECONOMIC BLOC` =="BRAZIL" ~ "Domestic",
+    `ECONOMIC BLOC` %in% `EU plus` ~ "EU plus",
+    `ECONOMIC BLOC` %in% China   ~ "China" ,# & Hong Kong",
+    `ECONOMIC BLOC` %in% `North America` ~"Americas",
+    `ECONOMIC BLOC` %in% `South & central America` ~"Americas",
+    `ECONOMIC BLOC` %in% Africa ~ "Africa",
+    `ECONOMIC BLOC` %in% Asia ~ "Asia\n(excl. China)",
+    `ECONOMIC BLOC` %in% Oceania ~ "Oceania",
+    `ECONOMIC BLOC` %in% `EU other` ~ "Europe\n(excl. EU plus)",
+    `ECONOMIC BLOC` %in% `Unknown` ~ "Unknown",
+    TRUE ~ `ECONOMIC BLOC`
+  )) %>% mutate (ExportRegions= factor(ExportRegions, 
+                                       levels=c("China", "EU plus", "Asia\n(excl. China)" , "Oceania","Africa", "Americas" ,"Europe\n(excl. EU plus)", "Unknown")))
+trase25g_dh_cerrado_export_ZDC <- trase25g_dh_cerrado_export %>%  group_by(N_EXPORTER, ExportRegions, G_ZDC) %>% #N_EXPORTER,
+  summarise (Years_A = n_distinct(YEAR),
+             SExport_year= sum (Stons, na.rm=TRUE),
+  ) 
+trase25g_dh_cerrado_export_all <- trase25g_dh_cerrado_export %>%   ungroup()%>% group_by(N_EXPORTER) %>% #N_EXPORTER,
+  summarise (Years_A = n_distinct(YEAR),
+             SExport_year_all= sum (Stons, na.rm=TRUE),
+  ) %>% select (-Years_A)
+trase25g_dh_cerrado_export_ZDC <- trase25g_dh_cerrado_export_ZDC %>% left_join(trase25g_dh_cerrado_export_all) %>% 
+  mutate(SExport_year_share = (SExport_year / SExport_year_all)*100)
+
+ggExC <- ggplot(trase25g_dh_cerrado_export_ZDC )+geom_boxplot(aes(ExportRegions, SExport_year_share, fill=G_ZDC))+
+            scale_x_discrete(drop=FALSE)+ 
+            scale_fill_discrete(drop=FALSE, label=c("No","Yes")) +
+            labs(y= "Soy export share %", x=NULL, subtitle = "Cerrado", fill="SoyM/ZDC")+
+            theme_bw()
+ggExC
+ggEx <- ggarrange(ggExA, ggExC, legend="bottom", common.legend = TRUE , labels = 'auto')
+ggsave(file.path(dir_plot, "Amazon_Cerrado_exportR_v1.png"), plot= ggEx, width = 11*1.5, height = 7, units = 'cm', dpi=600, scale=1.5 , bg="white")

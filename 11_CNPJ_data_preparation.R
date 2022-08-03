@@ -1,4 +1,5 @@
 # read and prepare CNPJ data for RQ1
+# this one ran on the server, due to large file size of the cnpj data derived from https://rdrr.io/github/georgevbsantiago/qsacnpj/f/README.Rmd 
 
 library (tidyverse)
 library(data.table)

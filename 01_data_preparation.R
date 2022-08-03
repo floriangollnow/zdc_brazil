@@ -1,6 +1,6 @@
 # cleaning company names
 # Identifying ZDC companies
-# combining trase and CNPJ data 
+# combining trase and CNPJ data (trase) 
 
 library(tidyverse)
 library(pastecs)

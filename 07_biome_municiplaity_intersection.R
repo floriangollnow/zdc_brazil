@@ -3,6 +3,8 @@
 # b) assigne municipalities to unique and combined biomes, for example Amazon (unique match) or Amazon-Cerrado for two intersections 
 
 library (tidyverse)
+# intersecting municipalities and biomes to set and define biome memberships
+
 library(sf)
 library (units)
 library(lwgeom)

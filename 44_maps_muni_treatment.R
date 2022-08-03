@@ -1,4 +1,4 @@
-#map municipalities first ZDC treatment year
+#map municipalities first ZDC treatment year - Figure S6-S9-S11
 
 library(sf)
 library(tidyverse)
@@ -68,13 +68,13 @@ def_a <- ggplot () +geom_sf(data= muni_amazon , aes(fill=(def4soyMT5_ha)), size=
   theme_bw()
 ggsave (filename = file.path(dir_plot, "Amazon_def.png"), width = 7 ,height =  5)
 
-# map municiplaities cerrado treatment year
+# map municiplaities cerrado treatment year Cerrado
 MarketShareData_C <-  MarketShareData.time %>% filter (Biome_lArea=="Cerrado", YEAR>=2006, YEAR<=2015) 
 muni_cerrado <- muni_s %>% inner_join(MarketShareData_C %>% filter(YEAR==2015), by=c("CD_GEOCMU"="GEOCODE"))
 muni_cerrado  <- muni_cerrado %>% mutate (first_treat50GZDC = factor(first_treat50GZDC , levels=c(as.character(2006:2015), 0)))
 trc <- ggplot () +geom_sf(data= muni_cerrado , aes(fill=first_treat50GZDC), size=0.2)+
   scale_fill_brewer(palette  = "Paired", name= "Year of ZDC\ntreatment",na.translate=FALSE,drop=F)+
-  ggtitle("ZDC treatment 'sceanrio' muncipalities 2006-2015")+
+  ggtitle("ZDC treatment 'scenario' muncipalities 2006-2015")+
   theme_bw()
 ggsave (filename = file.path(dir_plot, "Cerrado_munis.png"), width = 7 ,height =  5)
 

@@ -284,13 +284,13 @@ add(defC_2015A).add(defC_2016A).add(defC_2017A).add(defC_2018A).add(defC_2019A).
 
 var Soy_masked = Soy_2019.eq(1).and(stacked_Def.lt(2000));//only soy without def.. (lt= less than)
 
-var stacked_Def2 = stacked_Def.gt(2000).multiply(2).add(stacked_Def.gt(2010)).add(Soy_masked);//1 Soy, 2 Soydef >2000<=2010, 3 soydef>2010
+var stacked_Def2 = stacked_Def.gt(2000).multiply(2).add(stacked_Def.gt(2005)).add(Soy_masked);//1 Soy, 2 Soydef >2000<=2005, 3 soydef>2005
 //Map.addLayer(stacked_Def2.clip(bla),{}, "sdef");
 
-var FFSS_2019 = stacked_Def2.multiply(10).add(FFS_2019).add(LU_2019);// 10 Soy, 20 Soy def200-2010, 30 soydef 2010-2018, 1 Forest, 2 Suitable Forest, 3Pasture, 4Crop
+var FFSS_2019 = stacked_Def2.multiply(10).add(FFS_2019).add(LU_2019);// 10 Soy, 20 Soy def2000-2005, 30 soydef 2006-2018, 1 Forest, 2 Suitable Forest, 3Pasture, 4Crop
 
 var FFSS_2019_rec = FFSS_2019.remap([1,2,3,4,5,6,10,20,21,22,23,24,30,31,32,33,34],[1,2,3,4,8,9,5,6,6,6,6,6,7,7,7,7,7]);
-//1 Forest, 2 Suitable Forest, 3Pasture, 4Crop,8, grassland, 9 water, 5 soy , 6 soy-def 00-10,7 soy-def 11-18 
+//1 Forest, 2 Suitable Forest, 3Pasture, 4Crop,8, grassland, 9 water, 5 soy , 6 soy-def 00-05,7 soy-def 06-18 
 
 
 //export

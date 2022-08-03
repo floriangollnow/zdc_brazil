@@ -1,4 +1,4 @@
-//deriving soy area from Mapbiomas
+//deriving soy area from Mapbiomas 
 
 var MapBiomas = ee.Image ('projects/mapbiomas-workspace/public/collection5/mapbiomas_collection50_integration_v1')
 print(MapBiomas)

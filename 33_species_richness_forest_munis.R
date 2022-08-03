@@ -1,4 +1,4 @@
-# calculate how much of the species ranges (clipped to forest 2018) intersects with soy-suitable forests and how the ZDC market share is in those areas/municiplaitues
+# calculate how much of the species ranges (clipped to forest 2018) intersects with soy-suitable forests and how the ZDC market share is in those areas/municipalities
 
 library(tidyverse)
 dir_iucn <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/IUCN/all_treatened_int_forest"

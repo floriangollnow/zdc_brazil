@@ -1,7 +1,7 @@
 // assessing soy suitable forest by combining forest cover (Mapbiomas), GAEZ soy suitability and aptitude (Soares-Filho et al 2014 dataset) for mechanized crop production.
 
 var shape = ee.FeatureCollection('users/floriangollnow/AdminBr/BRMUE250GC_WGS84')
-var grid = ee.FeatureCollection('users/floriangollnow/Fede/ERA5_grid_buf')
+//var grid = ee.FeatureCollection('users/floriangollnow/Fede/ERA5_grid_buf')
 
 //print(shape)
 var GAEZSuit = ee.Image('users/floriangollnow/GAEZ/GAEZ_SoySuitability')
@@ -132,14 +132,12 @@ var fo_2018A = fo_2018.multiply(ee.Image.pixelArea()).multiply(GAEZ_slope_apt).r
 var fo_2019A = fo_2019.multiply(ee.Image.pixelArea()).multiply(GAEZ_slope_apt).rename(['b2019'])
 
 
-///reduce
+///stack and reduce
 var stacked_fo = fo_2000A.addBands(fo_2001A).addBands(fo_2002A).addBands(fo_2003A).addBands(fo_2004A).
 addBands(fo_2005A).addBands(fo_2006A).addBands(fo_2007A).addBands(fo_2008A).
 addBands(fo_2009A).addBands(fo_2010A).addBands(fo_2011A).addBands(fo_2012A).
 addBands(fo_2013A).addBands(fo_2014A).
 addBands(fo_2015A).addBands(fo_2016A).addBands(fo_2017A).addBands(fo_2018A).addBands(fo_2019A);
-
-
 
 
 var suit_region= stacked_fo.reduceRegions({
@@ -156,7 +154,7 @@ Export.table.toDrive({
   fileFormat: 'CSV',
   folder:'Mapbiomas'
 });
-
+/*
 var suit_grid= stacked_fo.reduceRegions({
   reducer: ee.Reducer.sum(),//.unweighted(),
   collection: grid,
@@ -171,4 +169,4 @@ Export.table.toDrive({
   fileFormat: 'CSV',
   folder:'Mapbiomas'
 });
-
+*/

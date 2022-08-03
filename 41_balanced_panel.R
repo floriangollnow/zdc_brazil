@@ -1,4 +1,4 @@
-## this script calculates a balanced panel identifying all municipalities that had soybeans planted from 2005 throughout 2018. 
+## this script calculates a balanced panel identifying all municipalities that had soybeans planted from 2005 throughout 2018 (Mapbiomas soy ha>1, ibge soy ha >0). 
 ## it reduces the data to those municipalities that are fully covered/within the Amazon biome.
 
 library(tidyverse)
@@ -12,7 +12,7 @@ MarketShareData <- read_rds(file.path (out, "MarketShare_annual_v1.rds"))
 
 #select municipalities inside amazon and reduce to years >= 2005
 MarketShareData_S05 <- MarketShareData %>% filter (Biome_c=="Amazônia", YEAR>=2005) #
-MarketShareData_S06 <- MarketShareData %>% filter (Biome_c=="Amazônia", YEAR>=2006) # for robustness check
+MarketShareData_S06 <- MarketShareData %>% filter (Biome_c=="Amazônia", YEAR>=2006) # for robustness check of time subset -> this one starts in 2006
 
 
 # balance sample ----

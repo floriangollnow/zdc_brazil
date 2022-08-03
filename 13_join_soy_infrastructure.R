@@ -1,4 +1,4 @@
-# adds soybean infrastructure to company database
+# adds soybean infrastructure (derived from trase) to company dataset (12__aggregate_trase_company.r)
 
 library(tidyverse)
 library(lubridate)

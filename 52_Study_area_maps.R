@@ -8,9 +8,11 @@ library(rmapshaper)
 library(nngeo)
 library(ggpubr)
 library(RColorBrewer)
+library(units)
 dir_plot <- "/Users/floriangollnow/Dropbox/ZDC_project/Draft/plot"
 
-raster_dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v5_maps"
+#raster_dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v5_maps"
+raster_dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v6_maps"
 biomes <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/Biomes/Biomes"
 states_dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/Admin/IBGE"
 munis_dir <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/Admin/IBGE/2015/br_municipios"
@@ -39,7 +41,7 @@ defS <- main_lu %>% reclassify( rcl=matrix(c(0,0, 1,0, 2,0, 3,0, 4,0, 5,0, 6,1, 
 
 boundary <- as_Spatial(cerrado)
 main_lu<- aggregate(main_lu,2,fun=modal, na.rm=TRUE)
-defS <- aggregate(defS,6,fun=max, na.rm=TRUE)
+defS <- aggregate(defS,5,fun=max, na.rm=TRUE)
 
 defS <- resample(defS, main_lu, method='ngb')
 
@@ -72,28 +74,37 @@ bb <- st_bbox(cerrado)
 # prepare state names for map
 states_cropped <- st_crop(states, bb)
 states_cropped <- states_cropped %>% filter (State_abb!="ES", State_abb!="RO")
-colors4<- c(brewer.pal(8, 'Set2'), "#0c2c84")[c(5,1,8,7,6,3,2,4,9)]
-
+colors4<- c(brewer.pal(8, 'Set2'), "#E41A1C","#F781BF", "#377EB8")[c(5,1,8,7,6,3,10,9,11)]#"#0c2c84"
+#colors5 <- c(brewer.pal(9, 'Set1')[c(1:8)], "#129912")[c(3,9,8,7,6,4,5,1,2)]
+print(brewer.pal(9, 'Set1'))
 # plot
 gg_luC <- ggplot() +
   geom_tile(data=main_lu.df1,  aes(x,y, fill = value)) +
+  # scale_fill_manual(values = c("1"="#c59ff4", "2"="#d01c8b", "3"="#FFFFB2","4"="#7fbc41", "5"="#129912" ), na.value=NA,# c("1"="#c59ff4", "2"="#e66101")"#f1b6da"
+  #                   name = "LUCC", labels = c("Soy", "Soy-\nDeforestation","Pasture" , "Forest", "Soy-suitable\nForest"), na.translate=FALSE)+
+  
   scale_fill_manual(values = colors4, na.value=NA,# c("1"="#c59ff4", "2"="#e66101")
-                    name = "LULCC",
-                    labels = c("Non-suit forest","Soy-suit forest","Grassland","Pasture", "Cropland","Soy", paste0("Soy-deforestation\n>2000\U2264", "2010"),paste0("Soy-deforestation\n",">2010\U2264", "2019"), "Water"), 
+                    name = NULL,
+                    labels = c("Forest","Soy-suitable\nforest","Grassland","Pasture", "Cropland","Soy", paste0("Soy-deforestation\n>2000\U2264", "2005"),paste0("Soy-deforestation\n",">2005\U2264", "2019"), "Water"), 
                     na.translate=FALSE, drop=FALSE)+
   geom_sf(data=states,color = "black", fill = NA, size=0.5, lty="longdash")+
-geom_sf(data=MatoP, color="white",fill = NA, size=1.4)+
-  geom_sf(data=MatoP, aes(lty=Matopiba), color="#a65628" ,fill = NA, size=1)+#"#7570b3"##5e3c99""#dd1c77"
+  geom_sf(data=MatoP, color="white",fill = NA, size=1.6)+
+  geom_sf(data=MatoP, aes(lty=Matopiba), color="#FF6700",fill = NA, size=1.2)+#"#7570b3"#5e3c99
+  #geom_sf(data=MatoP, aes(lty=Matopiba), color="#a65628" ,fill = NA, size=1)+#"#7570b3"##5e3c99""#dd1c77"
   geom_sf_label(data=states_cropped, aes(label = State_abb),fun.geometry = st_point_on_surface, nudge_y =  c(rep(0,7),+1, rep(0,6)), nudge_x = c(rep(0,7),0, rep(0,6)), color="black", fill="white", alpha=0.5)+
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), expand = FALSE)+
   theme_bw()+
   guides (fill=guide_legend(order=1),
-          pattern=guide_legend(order=2),
+          #pattern=guide_legend(order=2),
           color= guide_legend(order=3))+
-  theme(legend.position = "bottom", axis.title.x=element_blank(),axis.title.y=element_blank())
+  theme(legend.position = "bottom", 
+        legend.text = element_text(size=16),
+        legend.title = element_text(size=16),
+        legend.key.size= unit(1.5,'cm'),
+        axis.title.x=element_blank(),axis.title.y=element_blank())
 
 #gg_luC
-ggsave(file.path(dir_plot, "TEST_LU_Def.png"), plot=gg_luC, width = 21/2 ,height = 7)
+ggsave(file.path(dir_plot, "TEST_LU_Def_v7.png"), plot=gg_luC, width = 21/2 ,height = 7)
 legendgg <- get_legend(gg_luC)
 
 ####################
@@ -105,7 +116,7 @@ defS <- main_lu %>% reclassify( rcl=matrix(c(0,0, 1,0, 2,0, 3,0, 4,0, 5,0, 6,1, 
 
 boundary <- as_Spatial(amazon)
 main_lu<- aggregate(main_lu,2,fun=modal, na.rm=TRUE)
-defS <- aggregate(defS,6,fun=max, na.rm=TRUE)
+defS <- aggregate(defS,5,fun=max, na.rm=TRUE)
 defS <- resample(defS, main_lu, method='ngb')
 main_lum <- mask(main_lu, boundary)
 defS_m <- mask(defS, boundary)
@@ -134,15 +145,15 @@ gg_luA <- ggplot() +
   geom_tile(data=main_lu.df1,  aes(x,y, fill = value)) +
   scale_fill_manual(values = colors4, na.value=NA,# c("1"="#c59ff4", "2"="#e66101")
                     name = "LULCC",
-                    labels = c("Non-suit forest","Soy-suit forest","Grassland","Pasture", "Cropland","Soy", paste0("Soy-deforestation\n>2000\U2264", "2010"),paste0("Soy-deforestation\n",">2010\U2264", "2019"), "Water"), na.translate=FALSE)+
+                    labels = c("Non-suit forest","Soy-suitable\nforest","Grassland","Pasture", "Cropland","Soy", paste0("Soy-deforestation\n>2000\U2264", "2010"),paste0("Soy-deforestation\n",">2010\U2264", "2019"), "Water"), na.translate=FALSE)+
   geom_sf(data=states,color = "black", fill = "NA", size=0.5, lty="longdash")+
-geom_sf_label(data=states_cropped, aes(label = State_abb),fun.geometry = st_point_on_surface, nudge_y =  c(rep(0,8),-1.5, rep(0,5)), nudge_x = c(rep(0,8),-0.5, rep(0,5)), color="black", fill="white", alpha=0.5)+
+  geom_sf_label(data=states_cropped, aes(label = State_abb),fun.geometry = st_point_on_surface, nudge_y =  c(rep(0,8),-1.5, rep(0,5)), nudge_x = c(rep(0,8),-0.5, rep(0,5)), color="black", fill="white", alpha=0.5)+
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), expand = FALSE)+
   theme_bw()+
   theme(legend.position = "right", axis.title.x=element_blank(),axis.title.y=element_blank())
 
 #gg_luA
-ggsave(file.path(dir_plot, "TEST_Amazon_LU_Def.png"), plot=gg_luA, width = 21/2 ,height = 7)
+ggsave(file.path(dir_plot, "TEST_Amazon_LU_Def_v7.png"), plot=gg_luA, width = 21/2 ,height = 7)
 
 gg_maps <- ggarrange(gg_luA, gg_luC, ncol=2, nrow=1, labels="auto", align = "v",
                      common.legend = TRUE,
@@ -153,6 +164,6 @@ gg_maps <- ggarrange(gg_luA, gg_luC, ncol=2, nrow=1, labels="auto", align = "v",
                      label.y = 1
 )
 
-ggsave(file.path(dir_plot, "LU_Def.png"), plot=gg_maps, width = 11, height = 6 , units = "cm", dpi=600, scale=2, bg="white")
-ggsave(file.path(dir_plot, "LU_Def_4.png"), plot=gg_maps, width = 11, height = 6 , units = "cm", dpi=600, scale=3, bg="white")
+ggsave(file.path(dir_plot, "LU_Def_v7.png"), plot=gg_maps, width = 11, height = 6 , units = "cm", dpi=600, scale=2, bg="white")
+ggsave(file.path(dir_plot, "LU_Def_4_v7.png"), plot=gg_maps, width = 11, height = 6 , units = "cm", dpi=600, scale=3, bg="white")
 

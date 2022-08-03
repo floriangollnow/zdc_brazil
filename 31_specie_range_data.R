@@ -17,10 +17,11 @@ admin <- admin %>% group_by(CD_GEOC, Bim_lAr) %>% summarize()
 # reduce to species present
 iucn_present <- iucn %>% filter(PRESENCE  ==1)
 
-# how many species per biome
+# how many species per biome and overall (Cerrado + Amazon , Brazil)
 biome_iucn <- biome %>% st_intersection(iucn_present)
-biome_iucn %>% filter(name=="Cerrado") %>% distinct(BINOMIAL) #%>% nrow() #169
+biome_iucn %>% filter(name=="Cerrado") %>% distinct(BINOMIAL) %>% nrow() #172
 biome_iucn %>% filter(name=="Amazônia") %>% distinct(BINOMIAL) %>% nrow()# 169
+biome_iucn %>% filter(name=="Amazônia"|name=="Cerrado") %>% distinct(BINOMIAL) %>% nrow()#252
 biome_iucn %>% distinct(BINOMIAL) %>% nrow() #406
 
 

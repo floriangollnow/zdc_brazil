@@ -1,5 +1,5 @@
 # prepares treatment variable for DID starting in 2005
-# municipalities are treated after first SoyM market share increase >=50% & Year >=2006
+# 1) Main: municipalities are treated after first SoyM market share increase >=50% & Year >=2006
 
 
 library(tidyverse)

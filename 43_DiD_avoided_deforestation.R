@@ -36,7 +36,8 @@ ggplot ()+geom_point (data=MS_data, aes(YEAR, soyMtrader_share), color="blue")+
   theme (axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "bottom")
 
 ggsave(filename = file.path(down_file, "treatment_munis.png"), width=9, height=9 ,units = "cm", dpi=600,scale=2)
-# robustness to treatment coding! setting those treatments to 0 if at more than half of the post treatment observations were untreated
+
+# preparing dataset to check robustness to treatment coding! setting those treatments to 0 if more than half of the post treatment observations were untreated
 MS_data.df_3 <- MS_data.df %>% mutate (first_treat50= case_when(GEOCODE=="1100031" ~ 0,
                                                                 GEOCODE=="1101468" ~ 0,
                                                                 GEOCODE=="2100055" ~ 0,
@@ -101,7 +102,8 @@ for (i in c(1,2)){
 
 
 
-# Robuast against treatment definition  ------
+# Robust against treatment definition  ------
+# setting control group to 'notyettreated' instead of never treated
 out_3 <- att_gt(yname = "log_def4soyMT5_ha",
                 gname = "first_treat50",
                 idname = "geocode_n",
@@ -268,7 +270,7 @@ Stud_area_A %>% pull(def4soyMT5_ha) %>% sum()
 MarketShareData_C <-  MarketShareData.time %>% filter (Biome_lArea=="Cerrado", YEAR>=2006, YEAR<=2015) 
 
 
-Stud_area_C <- MarketShareData_C %>% select (GEOCODE, YEAR, def4soyMT5_ha, first_treat50GZDC) 
+Stud_area_C <- MarketShareData_C %>% select (GEOCODE, YEAR, def4soyMT5_ha, first_treat50GZDC, defMT) 
 Stud_area_C  <- Stud_area_C %>% mutate (treatmentDef = case_when(first_treat50GZDC!=0 & YEAR >= first_treat50GZDC ~ (def4soyMT5_ha * (1+ATTeffect)),
                                                                  TRUE ~ def4soyMT5_ha),
                                         treatmentDef_up = case_when(first_treat50GZDC!=0 & YEAR >= first_treat50GZDC ~ (def4soyMT5_ha * (1+overall_cband_upper )),
@@ -285,6 +287,7 @@ Stud_area_C %>% pull(avoidedDef ) %>% sum()
 Stud_area_C %>% pull(avoidedDef_up ) %>% sum()
 Stud_area_C %>% pull(avoidedDef_lower ) %>% sum()
 Stud_area_C %>% pull(def4soyMT5_ha) %>% sum()
+(Stud_area_C %>% pull(avoidedDef) %>% sum()/Stud_area_C %>% pull(defMT) %>% sum())*100
 # percent reduction
 (Stud_area_C %>% pull(avoidedDef ) %>% sum()/Stud_area_C %>% pull(def4soyMT5_ha) %>% sum())*100
 (Stud_area_C %>% pull(avoidedDef_up ) %>% sum()/Stud_area_C %>% pull(def4soyMT5_ha) %>% sum())*100

@@ -1,4 +1,9 @@
-# calculate ZDC market share and add deforestation and biome intersection (see script 4.2) to dataset for all years between 2002-2017
+# calculate ZDC market share and add 
+# soy area
+# deforestation
+# forest area
+# soy suitable forest areas
+# and biome intersection (see script 07) to dataset for all years between 2002-2017
 # based on 01_data_preparation and 4.2 biome
 
 library(tidyverse)

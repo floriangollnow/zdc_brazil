@@ -1,7 +1,7 @@
 #DID model for estimating deforestation leakage using 
 # response: average neighbors soy-deforestation 
 # treatment ZDC market share treatment
-# controll: neighbors average ZDC market share 
+# control: neighbors average ZDC market share 
 
 
 library(tidyverse)

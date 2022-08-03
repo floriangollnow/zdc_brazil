@@ -5,11 +5,11 @@ library(tidyverse)
 dir_in <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v5_raw"
 dir_out <- "/Users/floriangollnow/Dropbox/ZDC_project/DATA/GEE/MapBiomas_v5"
 
-files_in <- unique (str_sub (dir(dir_in, pattern=".csv$"), end=-7))
-files_in[c(3,4,5,6)] # soy aptidute
+files_in <- unique (str_sub (dir(dir_in, pattern=".csv$"), end=-7))# selecting unique file names
+#files_in[c(3,4,5,6)] # soy aptidute
 
 #for (i in files_in){
-for (i in files_in[c(3,4,5,6)]){  
+for (i in files_in){  #[c(3,4,5,6)]
   test <- read_csv(file.path(dir_in,paste0(i, "_1.csv"))) %>% length()# adaptive colltypes
   
   tab1 <- read_csv(file.path(dir_in,paste0(i, "_1.csv")), col_types = paste0("c", paste0(rep("d", times=test-1 ),collapse="")))

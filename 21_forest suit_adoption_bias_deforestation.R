@@ -1,6 +1,6 @@
 # assessing soy suitable forest across ZDC categories in the Brazilian Cerrado and Amazon (RQ2) ----
 # 127 following: selection bias based on municipality forest cover? -----
-# 175 following: overall and soy-deforestation categorized by ZDC class -----
+# 175 following: overall and soy-deforestation categorized by ZDC class (SI Figure 4)-----
 
 
 library(tidyverse)
